@@ -10,4 +10,7 @@ php artisan ui vue --auth
 ```sh
 npm install && npm run dev
 ```
-### php artisan make:migration add_isadmin_to_users
+```sh
+php artisan make:migration add_isadmin_to_users
+```
+
