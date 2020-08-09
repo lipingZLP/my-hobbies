@@ -29,13 +29,14 @@ Add a hobby
     "categoryId": 2,
     "title": "Book XXX from YYY",
     "description": "Blabla blabla",
-    "rating": 2,
+    "rating": 2
 }
 ```
 
 ### Response
 
 ```json
+{}
 ```
 
 
@@ -57,18 +58,14 @@ Return the latest 30th hobbies of a given user
         {
             "id": 1,
             "title": "Book XXX from YYY",
-            "date": 1596895089,
             "author": {
                 "id": 4,
                 "name": "Liping",
                 "nickname": "Lime",
                 "avatar": "photo.jpg"
             },
-            "category": {
-                "id": 1,
-                "name": "Books",
-                "icon": "books.jpg"
-            },
+            "date": 1596895089,
+            "category_id": 1,
             "description": "Blabla blabla",
             "photos": ["a.jpg", "b.jpg"],
             "rating": 8,
