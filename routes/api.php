@@ -20,3 +20,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/categories', 'Api\CategoryApiController@getAll');
 Route::post('/hobbies/add', 'Api\HobbiesApiController@add');
+Route::get('/users/{id}/hobbies', 'Api\UsersApiController@getHobbiesById');
