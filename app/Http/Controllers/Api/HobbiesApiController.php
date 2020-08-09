@@ -1,0 +1,36 @@
+<?php
+
+namespace App\Http\Controllers\Api;
+use App\Http\Controllers\Controller;
+use App\Repositories\HobbiesRepository;
+use Illuminate\Http\Request;
+use App\Models\Error;
+
+class HobbiesApiController extends Controller
+{
+    protected $repository;
+
+    public function __construct(HobbiesRepository $repository)
+    {
+        $this->repository = $repository;
+    }
+
+    public function add(Request $request)
+    {
+        if (!$request->has('categoryId') ||
+             !$request->has('title') ||
+             !$request->has('description') ||
+             !$request->has('rating')) {
+            return response()->json(new Error('Invalid query'), 400);
+        }
+
+        $categoryId = $request->input('categoryId');
+        $title = $request->input('title');
+        $description = $request->input('description');
+        $rating = $request->input('rating');
+
+        $this->repository->add($categoryId, $title, $description, $rating);
+
+        return response('{}', 200, ['Content-Type' => 'application/json']);
+    }
+}
