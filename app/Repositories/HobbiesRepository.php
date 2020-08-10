@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\ShowHobbies;
+use App\Models\ShowComments;
 use Illuminate\Support\Facades\DB;
 
 class HobbiesRepository
@@ -26,5 +27,18 @@ class HobbiesRepository
         $ShowHobbiesData = DB::select($sql, [$id]);
 
         return new ShowHobbies($ShowHobbiesData);
+    }
+
+    public function getCommentsById($id)
+    {
+        $sql = 'SELECT c.id as cid, c.content,
+            u.id, u.name, u.nickname, u.avatar
+            FROM comments c
+            INNER JOIN users u ON c.user_id = u.id
+            WHERE c.post_id = ?';
+
+        $commentsData = DB::select($sql, [$id]);
+
+        return new ShowComments($commentsData);
     }
 }

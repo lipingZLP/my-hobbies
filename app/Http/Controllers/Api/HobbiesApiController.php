@@ -43,4 +43,10 @@ class HobbiesApiController extends Controller
         $data = $this->repository->showFollowingHobbies($user_id);
         return response()->json($data);
     }
+
+    public function getComments($id)
+    {
+        $data = $this->repository->getCommentsById($id);
+        return response()->json($data);
+    }
 }
