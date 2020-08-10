@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Repositories\UsersRepository;
+use Illuminate\Http\Request;
 use App\Models\Error;
 
 class UsersApiController extends Controller
@@ -27,5 +28,20 @@ class UsersApiController extends Controller
         }
 
         return response()->json($data);
+    }
+
+    public function follow($id)
+    {
+        $user_id = 1; // TODO: CHANGE USER_ID VALUE
+
+        if (!is_numeric($id)) {
+            return response()->json(new Error('Invalid query'), 400);
+        }
+
+        if (!$this->repository->addFollower($id, $user_id)) {
+            return response()->json(new Error('Invalid query'), 400);
+        }
+
+        return response('{}', 201);
     }
 }

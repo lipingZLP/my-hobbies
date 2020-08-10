@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use Illuminate\Support\Facades\DB;
 use App\Models\GetSingleUserHobbies;
+use Illuminate\Database\QueryException;
 
 class UsersRepository
 {
@@ -27,5 +28,23 @@ class UsersRepository
         }
 
         return new GetSingleUserHobbies($userInfoData, $hobbiesInfoData);
+    }
+
+    public function addFollower($user_id, $follower_id)
+    {
+        $countSql = 'SELECT COUNT(id) as count FROM followers WHERE user_id = ? AND follower_id = ?';
+        $data = DB::select($countSql, [$user_id, $follower_id])[0];
+        if ($data->count > 0) {
+            return false;
+        }
+
+        $sql = 'INSERT INTO followers (user_id, follower_id) VALUES (?, ?)';
+
+        try {
+            DB::insert($sql, [$user_id, $follower_id]);
+            return true;
+        } catch (QueryException $e) {
+            return false;
+        }
     }
 }

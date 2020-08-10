@@ -24,13 +24,15 @@ class HobbiesApiController extends Controller
             return response()->json(new Error('Invalid query'), 400);
         }
 
+        $user_id = 1; // TODO: CHANGE USER_ID VALUE
+
         $categoryId = $request->input('categoryId');
         $title = $request->input('title');
         $description = $request->input('description');
         $rating = $request->input('rating');
 
-        $this->repository->add($categoryId, $title, $description, $rating);
+        $this->repository->add($user_id, $categoryId, $title, $description, $rating);
 
-        return response('{}', 200, ['Content-Type' => 'application/json']);
+        return response('{}', 201, ['Content-Type' => 'application/json']);
     }
 }
