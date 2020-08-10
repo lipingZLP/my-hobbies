@@ -44,4 +44,19 @@ class UsersApiController extends Controller
 
         return response('{}', 201);
     }
+
+    public function unfollow($id)
+    {
+        $user_id = 1;
+
+        if (!is_numeric($id)) {
+            return response()->json(new Error('Invalid query'), 400);
+        }
+
+        if (!$this->repository->unfollow($id, $user_id)) {
+            return response()->json(new Error('Not found'), 404);
+        };
+
+        return response('{}', 200);
+    }
 }

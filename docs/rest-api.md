@@ -106,6 +106,13 @@ Follow a user
 ```
 
 
+## POST `/users/{id}/unfollow
+
+### Response
+
+```json
+```
+
 ## GET /users/{id}/followers
 
 Get all the followers

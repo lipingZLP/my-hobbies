@@ -47,4 +47,11 @@ class UsersRepository
             return false;
         }
     }
+
+    public function unfollow($user_id, $follower_id)
+    {
+        $sql = 'DELETE FROM followers WHERE user_id = ? AND follower_id = ?';
+        $affectedRows = DB::delete($sql, [$user_id, $follower_id]);
+        return $affectedRows > 0;
+    }
 }
