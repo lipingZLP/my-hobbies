@@ -59,4 +59,14 @@ class UsersApiController extends Controller
 
         return response('{}', 200);
     }
+
+    public function getFollowers($id)
+    {
+        if (!is_numeric($id)) {
+            return response()->json(new Error('Invalid query'), 400);
+        }
+
+        $data = $this->repository->getFollowers($id);
+        return response()->json($data);
+    }
 }

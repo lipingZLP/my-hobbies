@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\GetFollowers;
 use Illuminate\Support\Facades\DB;
 use App\Models\GetSingleUserHobbies;
 use Illuminate\Database\QueryException;
@@ -53,5 +54,16 @@ class UsersRepository
         $sql = 'DELETE FROM followers WHERE user_id = ? AND follower_id = ?';
         $affectedRows = DB::delete($sql, [$user_id, $follower_id]);
         return $affectedRows > 0;
+    }
+
+    public function getFollowers($id)
+    {
+        $sql = 'SELECT u.id, u.name, u.nickname, u.avatar
+            FROM users u
+            INNER JOIN followers f ON f.follower_id = u.id
+            WHERE f.user_id = ?';
+        $followersInfoData = DB::select($sql, [$id]);
+
+        return new GetFollowers($followersInfoData);
     }
 }
