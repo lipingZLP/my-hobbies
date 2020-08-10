@@ -35,4 +35,12 @@ class HobbiesApiController extends Controller
 
         return response('{}', 201, ['Content-Type' => 'application/json']);
     }
+
+    public function showHobbies()
+    {
+        $user_id = 1; // TODO: CHANGE USER_ID VALUE
+
+        $data = $this->repository->showFollowingHobbies($user_id);
+        return response()->json($data);
+    }
 }

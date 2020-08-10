@@ -165,11 +165,7 @@ Return the latest 30th posts from people you follow
                 "nickname": "Lime",
                 "avatar": "photo.jpg"
             },
-            "category": {
-                "id": 1,
-                "name": "Books",
-                "icon": "books.jpg"
-            },
+            "category_id": 1,
             "description": "Blabla blabla",
             "photos": ["a.jpg", "b.jpg"],
             "rating": 8,

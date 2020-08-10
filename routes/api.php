@@ -25,3 +25,4 @@ Route::post('/users/{id}/follow', 'Api\UsersApiController@follow');
 Route::delete('/users/{id}/unfollow', 'Api\UsersApiController@unfollow');
 Route::get('/users/{id}/followers', 'Api\UsersApiController@getFollowers');
 Route::get('/users/{id}/following', 'Api\UsersApiController@getFollowing');
+Route::get('/hobbies/latest', 'Api\HobbiesApiController@showHobbies');
