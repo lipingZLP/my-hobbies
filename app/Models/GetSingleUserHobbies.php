@@ -51,27 +51,11 @@ class GetSingleUserHobbiesHobby
     {
         $this->id = $hobbyInfoDbData->id;
         $this->title = $hobbyInfoDbData->title;
-        $this->author = new Author($userInfoDbData);
+        $this->author = new User($userInfoDbData);
         $this->date = $hobbyInfoDbData->date;
         $this->category_id = $hobbyInfoDbData->category_id;
         $this->description = $hobbyInfoDbData->description;
         $this->rating = $hobbyInfoDbData->rating;
         $this->commentsNb = $hobbyInfoDbData->commentsNb;
-    }
-}
-
-class Author
-{
-    public $id;
-    public $name;
-    public $nickname;
-    public $avatar;
-
-    public function __construct($userInfoDbData)
-    {
-        $this->id = $userInfoDbData->id;
-        $this->name = $userInfoDbData->name;
-        $this->nickname = $userInfoDbData->nickname;
-        $this->avatar = $userInfoDbData->avatar;
     }
 }

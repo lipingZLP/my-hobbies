@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\GetFollowers;
+use App\Models\GetFollowing;
 use Illuminate\Support\Facades\DB;
 use App\Models\GetSingleUserHobbies;
 use Illuminate\Database\QueryException;
@@ -65,5 +66,16 @@ class UsersRepository
         $followersInfoData = DB::select($sql, [$id]);
 
         return new GetFollowers($followersInfoData);
+    }
+
+    public function getFollowing($id)
+    {
+        $sql = 'SELECT u.id, u.name, u.nickname, u.avatar
+            FROM users u
+            INNER JOIN followers f ON f.user_id = u.id
+            WHERE f.follower_id = ?';
+        $followingInfoData = DB::select($sql, [$id]);
+
+        return new GetFollowing($followingInfoData);
     }
 }
