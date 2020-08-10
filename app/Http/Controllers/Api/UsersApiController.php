@@ -42,7 +42,7 @@ class UsersApiController extends Controller
             return response()->json(new Error('Invalid query'), 400);
         }
 
-        return response('{}', 201);
+        return response('{}', 201, ['Content-Type' => 'application/json']);
     }
 
     public function unfollow($id)
@@ -57,7 +57,7 @@ class UsersApiController extends Controller
             return response()->json(new Error('Not found'), 404);
         };
 
-        return response('{}', 200);
+        return response('{}', 200, ['Content-Type' => 'application/json']);
     }
 
     public function getFollowers($id)
@@ -78,5 +78,22 @@ class UsersApiController extends Controller
 
         $data = $this->repository->getFollowing($id);
         return response()->json($data);
+    }
+
+    public function addComment(Request $request, $id)
+    {
+        $user_id = 1; // TODO: CHANGE USER_ID VALUE
+
+        if (!is_numeric($id)) {
+            return response()->json(new Error('Invalid query'), 400);
+        }
+
+        $content = $request->input('content');
+
+        if (!$this->repository->addComment($content, $user_id, $id)) {
+            return response()->json(new Error('Invalid query'), 400);
+        }
+
+        return response('{}', 201, ['Content-Type' => 'application/json']);
     }
 }

@@ -32,28 +32,28 @@ class UsersRepository
         return new GetSingleUserHobbies($userInfoData, $hobbiesInfoData);
     }
 
-    public function addFollower($user_id, $follower_id)
+    public function addFollower($userId, $followerId)
     {
         $countSql = 'SELECT COUNT(id) as count FROM followers WHERE user_id = ? AND follower_id = ?';
-        $data = DB::select($countSql, [$user_id, $follower_id])[0];
+        $data = DB::select($countSql, [$userId, $followerId])[0];
         if ($data->count > 0) {
             return false;
         }
 
-        $sql = 'INSERT INTO followers (user_id, follower_id) VALUES (?, ?)';
+        $sql = 'INSERT INTO followers(user_id, follower_id) VALUES (?, ?)';
 
         try {
-            DB::insert($sql, [$user_id, $follower_id]);
+            DB::insert($sql, [$userId, $followerId]);
             return true;
         } catch (QueryException $e) {
             return false;
         }
     }
 
-    public function unfollow($user_id, $follower_id)
+    public function unfollow($userId, $followerId)
     {
         $sql = 'DELETE FROM followers WHERE user_id = ? AND follower_id = ?';
-        $affectedRows = DB::delete($sql, [$user_id, $follower_id]);
+        $affectedRows = DB::delete($sql, [$userId, $followerId]);
         return $affectedRows > 0;
     }
 
@@ -77,5 +77,17 @@ class UsersRepository
         $followingInfoData = DB::select($sql, [$id]);
 
         return new GetFollowing($followingInfoData);
+    }
+
+    public function addComment($content, $userId, $postId)
+    {
+        $sql = 'INSERT INTO comments(content, user_id, post_id, date) VALUES (?, ?, ?, NOW())';
+
+        try {
+            DB::insert($sql, [$content, $userId, $postId]);
+            return true;
+        } catch (QueryException $e) {
+            return false;
+        }
     }
 }
