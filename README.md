@@ -53,3 +53,14 @@ While developing, you can use:
 ```sh
 npm run watch
 ```
+
+
+### Add an administrator
+
+To have access to the admin page, you must:
+- Create a standard user using the registration page
+- Modify the database (table: `users`, column: `is_admin`)
+
+```sql
+UPDATE `users` SET is_admin = TRUE WHERE id = ?;
+```

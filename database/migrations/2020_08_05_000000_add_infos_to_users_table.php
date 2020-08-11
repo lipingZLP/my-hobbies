@@ -14,9 +14,9 @@ class AddInfosToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('nickname');
-            $table->string('avatar');
-            $table->boolean('is_admin');
+            $table->string('nickname')->unique();
+            $table->string('avatar')->nullable();
+            $table->boolean('is_admin')->default(false);
         });
     }
 
