@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    <post-new-comment hobby_id="{{ $id }}"></post-new-comment>
+    <comments-page hobby_id="{{ $id }}"></comments-page>
 @endsection

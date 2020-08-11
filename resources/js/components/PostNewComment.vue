@@ -35,9 +35,8 @@ export default {
         submitted() {
             axios.post(`/api/hobbies/${this.$props.hobby_id}/comment`, this.formData)
                 .then(res => {
-                    this.show = false;
-                    this.formData.content = '';
-                    // TODO: Refresh
+                    // Force refresh page
+                    document.location.reload(true)
                 })
                 .catch(err => {
                     console.log(err)

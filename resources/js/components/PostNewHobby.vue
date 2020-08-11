@@ -49,12 +49,8 @@ export default {
         submitted() {
             axios.post('/api/hobbies/add', this.formData)
                 .then(res => {
-                    this.show = false;
-
-                    this.formData.categoryId = null;
-                    this.formData.title = '';
-                    this.formData.description = '';
-                    this.formData.rating = null;
+                    // Force refresh page
+                    document.location.reload(true)
                 })
                 .catch(err => {
                     console.log(err)

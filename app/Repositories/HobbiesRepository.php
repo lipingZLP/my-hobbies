@@ -35,7 +35,8 @@ class HobbiesRepository
             u.id, u.name, u.nickname, u.avatar
             FROM comments c
             INNER JOIN users u ON c.user_id = u.id
-            WHERE c.post_id = ?';
+            WHERE c.post_id = ?
+            ORDER BY c.id DESC';
 
         $commentsData = DB::select($sql, [$id]);
 
