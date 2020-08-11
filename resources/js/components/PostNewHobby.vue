@@ -3,8 +3,8 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header">POST NEW HOBBY</div>
-                    <div class="card-body">
+                    <div class="card-header" @click="show = !show">POST NEW HOBBY</div>
+                    <div class="card-body" v-show="show">
 
                         <label for="category">Category (1-5)</label>
                         <input min="1" max="5" type="number" id="category" class="form-control" v-model.number="formData.categoryId">
@@ -33,6 +33,7 @@
 export default {
     data() {
         return {
+            show: false,
             formData: {
                 categoryId: 2,
                 title: 'test title',
