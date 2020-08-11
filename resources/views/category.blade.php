@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    <user-page username="{{ $username }}"></user-page>
+    <category-page id="{{ $id }}"></category-page>
 @endsection

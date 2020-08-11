@@ -234,6 +234,7 @@ Return the latest 30th posts of a given category
                 "nickname": "Lime",
                 "avatar": "photo.jpg"
             },
+            "category_id": 1,
             "description": "Blabla blabla",
             "photos": ["a.jpg", "b.jpg"],
             "rating": 8,

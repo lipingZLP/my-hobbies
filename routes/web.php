@@ -26,6 +26,10 @@ Route::middleware('auth')->group(function() {
     Route::get('/users/{username}', function ($username) {
         return view('user_profile', ['username' => $username]);
     });
+
+    Route::get('/categories/{id}', function ($id) {
+        return view('category', ['id' => $id]);
+    });
 });
 
 // API routes

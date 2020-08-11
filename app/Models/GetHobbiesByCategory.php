@@ -23,6 +23,7 @@ class GetHobbies
     public $title;
     public $date;
     public $author;
+    public $category_id;
     public $description;
     public $rating;
     public $commentsNb;
@@ -33,6 +34,7 @@ class GetHobbies
         $this->title = $hobbiesInfoData->title;
         $this->date = $hobbiesInfoData->date;
         $this->author = new User($hobbiesInfoData);
+        $this->category_id = $hobbiesInfoData->category_id;
         $this->description = $hobbiesInfoData->description;
         $this->rating = $hobbiesInfoData->rating;
         $this->commentsNb = $hobbiesInfoData->commentsNb;
