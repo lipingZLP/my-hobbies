@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\HobbiesRepository;
 use Illuminate\Http\Request;
 use App\Models\Error;
+use Illuminate\Support\Facades\Auth;
 
 class HobbiesApiController extends Controller
 {
@@ -17,14 +18,14 @@ class HobbiesApiController extends Controller
 
     public function add(Request $request)
     {
+        $user_id = Auth::id();
+
         if (!$request->has('categoryId') ||
              !$request->has('title') ||
              !$request->has('description') ||
              !$request->has('rating')) {
             return response()->json(new Error('Invalid query'), 400);
         }
-
-        $user_id = 1; // TODO: CHANGE USER_ID VALUE
 
         $categoryId = $request->input('categoryId');
         $title = $request->input('title');
@@ -38,7 +39,7 @@ class HobbiesApiController extends Controller
 
     public function showHobbies()
     {
-        $user_id = 1; // TODO: CHANGE USER_ID VALUE
+        $user_id = Auth::id();
 
         $data = $this->repository->showFollowingHobbies($user_id);
         return response()->json($data);

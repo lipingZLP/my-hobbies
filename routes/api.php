@@ -17,15 +17,3 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-Route::get('/categories', 'Api\CategoryApiController@getAll');
-Route::post('/hobbies/add', 'Api\HobbiesApiController@add');
-Route::get('/users/{id}/hobbies', 'Api\UsersApiController@getHobbiesById');
-Route::post('/users/{id}/follow', 'Api\UsersApiController@follow');
-Route::delete('/users/{id}/unfollow', 'Api\UsersApiController@unfollow');
-Route::get('/users/{id}/followers', 'Api\UsersApiController@getFollowers');
-Route::get('/users/{id}/following', 'Api\UsersApiController@getFollowing');
-Route::get('/hobbies/latest', 'Api\HobbiesApiController@showHobbies');
-Route::get('/hobbies/{id}/comments', 'Api\HobbiesApiController@getComments');
-Route::post('/hobbies/{id}/comment', 'Api\UsersApiController@addComment');
-Route::get('/categories/{id}/hobbies', 'Api\CategoryApiController@getHobbiesByCategory');

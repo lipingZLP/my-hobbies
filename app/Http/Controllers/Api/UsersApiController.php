@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\UsersRepository;
 use Illuminate\Http\Request;
 use App\Models\Error;
+use Illuminate\Support\Facades\Auth;
 
 class UsersApiController extends Controller
 {
@@ -32,7 +33,7 @@ class UsersApiController extends Controller
 
     public function follow($id)
     {
-        $user_id = 1; // TODO: CHANGE USER_ID VALUE
+        $user_id = Auth::id();
 
         if (!is_numeric($id)) {
             return response()->json(new Error('Invalid query'), 400);
@@ -47,7 +48,7 @@ class UsersApiController extends Controller
 
     public function unfollow($id)
     {
-        $user_id = 1;
+        $user_id = Auth::id();
 
         if (!is_numeric($id)) {
             return response()->json(new Error('Invalid query'), 400);
@@ -82,7 +83,7 @@ class UsersApiController extends Controller
 
     public function addComment(Request $request, $id)
     {
-        $user_id = 1; // TODO: CHANGE USER_ID VALUE
+        $user_id = Auth::id();
 
         if (!is_numeric($id)) {
             return response()->json(new Error('Invalid query'), 400);

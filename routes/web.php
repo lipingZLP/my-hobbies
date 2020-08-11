@@ -20,3 +20,18 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+// API routes
+Route::middleware('check.auth')->group(function() {
+    Route::get('/api/users/{id}/hobbies', 'Api\UsersApiController@getHobbiesById');
+    Route::post('/api/users/{id}/follow', 'Api\UsersApiController@follow');
+    Route::delete('/api/users/{id}/unfollow', 'Api\UsersApiController@unfollow');
+    Route::get('/api/users/{id}/followers', 'Api\UsersApiController@getFollowers');
+    Route::get('/api/users/{id}/following', 'Api\UsersApiController@getFollowing');
+    Route::post('/api/hobbies/add', 'Api\HobbiesApiController@add');
+    Route::get('/api/hobbies/latest', 'Api\HobbiesApiController@showHobbies');
+    Route::get('/api/hobbies/{id}/comments', 'Api\HobbiesApiController@getComments');
+    Route::post('/api/hobbies/{id}/comment', 'Api\UsersApiController@addComment');
+    Route::get('/api/categories', 'Api\CategoryApiController@getAll');
+    Route::get('/api/categories/{id}/hobbies', 'Api\CategoryApiController@getHobbiesByCategory');
+});
