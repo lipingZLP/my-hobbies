@@ -13,4 +13,16 @@ export default new Vuex.Store({
             {id: 5, name: 'Gaming', icon: '🎮'}
         ]
     },
+
+    getters: {
+        getProfileLink: () => (user) => {
+            if (user.avatar) {
+                return user.avatar
+            }
+            return '/images/avatar_placeholder.jpeg'
+        },
+        getCategory: (state) => (id) => {
+            return state.categories.find(element => element.id === id);
+        }
+    }
 })

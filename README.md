@@ -34,6 +34,8 @@ php artisan migrate
 Modify the `my-hobbies/.env` file and set the following:
 
 ```
+APP_NAME="My Hobbies"
+
 DB_HOST=<mysql_server_address>
 DB_DATABASE=myhobbies
 DB_USERNAME=<mysql_username_eg_root>

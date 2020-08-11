@@ -16,13 +16,9 @@ class UsersApiController extends Controller
         $this->repository = $repository;
     }
 
-    public function getHobbiesById($id)
+    public function getInfoByUsername($username)
     {
-        if (!is_numeric($id)) {
-            return response()->json(new Error('Invalid query'), 400);
-        }
-
-        $data = $this->repository->getHobbiesById($id);
+        $data = $this->repository->getInfoByUsername($username);
 
         if (!isset($data)) {
             return response()->json(new Error('Resource not found'), 404);

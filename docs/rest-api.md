@@ -40,9 +40,9 @@ Add a hobby
 ```
 
 
-## GET `/users/{id}/hobbies`
+## GET `/users/{username}`
 
-Return the latest 30th hobbies of a given user
+Return user's info + his/her latest hobbies
 
 ```json
 {

@@ -77,7 +77,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    My Hobbies
+                    {{ config('app.name', 'My Hobbies') }}
                 </div>
             </div>
         </div>

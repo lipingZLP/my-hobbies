@@ -21,13 +21,20 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+// Web authenticated routes
+Route::middleware('auth')->group(function() {
+    Route::get('/users/{username}', function ($username) {
+        return view('user_profile', ['username' => $username]);
+    });
+});
+
 // API routes
 Route::middleware('check.auth')->group(function() {
-    Route::get('/api/users/{id}/hobbies', 'Api\UsersApiController@getHobbiesById');
     Route::post('/api/users/{id}/follow', 'Api\UsersApiController@follow');
     Route::delete('/api/users/{id}/unfollow', 'Api\UsersApiController@unfollow');
     Route::get('/api/users/{id}/followers', 'Api\UsersApiController@getFollowers');
     Route::get('/api/users/{id}/following', 'Api\UsersApiController@getFollowing');
+    Route::get('/api/users/{username}', 'Api\UsersApiController@getInfoByUsername');
     Route::post('/api/hobbies/add', 'Api\HobbiesApiController@add');
     Route::get('/api/hobbies/latest', 'Api\HobbiesApiController@showHobbies');
     Route::get('/api/hobbies/{id}/comments', 'Api\HobbiesApiController@getComments');

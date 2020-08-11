@@ -44,13 +44,9 @@ export default {
 
     methods: {
         submitted() {
-            console.log("TEST -- SEND DATA")
-            console.log(JSON.stringify(this.formData))
-
             axios.post('/api/hobbies/add', this.formData)
                 .then(res => {
-                    console.log("TEST 2")
-                    console.log(res.data)
+                    //console.log(res.data)
                 })
                 .catch(err => {
                     console.log(err)

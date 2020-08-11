@@ -18,7 +18,7 @@ class CategoryRepository
     public function getHobbiesByCategory($id)
     {
         $categoryInfoSql = 'SELECT id, name, icon FROM categories WHERE id = ?';
-        $categoryInfoData = DB::select($categoryInfoSql, [$id])[0];
+        $categoryInfoData = DB::selectOne($categoryInfoSql, [$id]);
 
         $hobbiesInfoSql = 'SELECT p.id as pid, p.title, p.date, p.description, p.rating,
             (SELECT COUNT(c.id) FROM comments c WHERE c.post_id = p.id) as commentsNb,

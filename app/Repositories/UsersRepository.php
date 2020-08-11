@@ -10,24 +10,23 @@ use Illuminate\Database\QueryException;
 
 class UsersRepository
 {
-    public function getHobbiesById($id)
+    public function getInfoByUsername($username)
     {
         $userInfoSql = 'SELECT id, name, nickname, avatar,
-            (SELECT COUNT(id) FROM followers WHERE user_id = ?) as followers,
-            (SELECT COUNT(id) FROM followers WHERE follower_id = ?) as following
-            FROM users WHERE id = ?';
+            (SELECT COUNT(id) FROM followers WHERE user_id = u.id) as followers,
+            (SELECT COUNT(id) FROM followers WHERE follower_id = u.id) as following
+            FROM users u WHERE nickname = ?';
 
-        $userInfoData = DB::selectOne($userInfoSql, [$id, $id, $id]);
+        $userInfoData = DB::selectOne($userInfoSql, [$username]);
+        if (!isset($userInfoData)) {
+            return null;
+        }
 
         $hobbiesInfoSql = 'SELECT p.*,
             (SELECT COUNT(c.id) FROM comments c WHERE c.post_id = p.id) as commentsNb
             FROM posts p
             WHERE p.user_id = ? ORDER BY date DESC LIMIT 30';
-        $hobbiesInfoData = DB::select($hobbiesInfoSql, [$id]);
-
-        if (!isset($userInfoData) || !isset($hobbiesInfoData)) {
-            return null;
-        }
+        $hobbiesInfoData = DB::select($hobbiesInfoSql, [$userInfoData->id]);
 
         return new GetSingleUserHobbies($userInfoData, $hobbiesInfoData);
     }
@@ -35,7 +34,7 @@ class UsersRepository
     public function addFollower($userId, $followerId)
     {
         $countSql = 'SELECT COUNT(id) as count FROM followers WHERE user_id = ? AND follower_id = ?';
-        $data = DB::select($countSql, [$userId, $followerId])[0];
+        $data = DB::selectOne($countSql, [$userId, $followerId]);
         if ($data->count > 0) {
             return false;
         }
