@@ -30,6 +30,10 @@ Route::middleware('auth')->group(function() {
     Route::get('/categories/{id}', function ($id) {
         return view('category', ['id' => $id]);
     });
+
+    Route::get('/hobby/{id}', function ($id) {
+        return view('comments', ['id' => $id]);
+    });
 });
 
 // API routes
