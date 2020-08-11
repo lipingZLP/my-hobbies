@@ -39,3 +39,17 @@ DB_DATABASE=myhobbies
 DB_USERNAME=<mysql_username_eg_root>
 DB_PASSWORD=<mysql_password_eg_root>
 ```
+
+
+### Compile the frontend part
+
+```sh
+cd ..
+npm install && npm run dev
+```
+
+While developing, you can use:
+
+```sh
+npm run watch
+```
