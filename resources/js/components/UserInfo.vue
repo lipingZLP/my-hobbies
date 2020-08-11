@@ -16,6 +16,8 @@
 
                                     <h6><a :href="`/users/${user.id}/following`"><b>{{user.following}}</b> following</a></h6>
                                     <h6><a :href="`/users/${user.id}/followers`"><b>{{user.followers}}</b> followers</a></h6>
+
+                                    <follow-button :id="user.id"></follow-button>
                                 </div>
                             </div>
                         </div>

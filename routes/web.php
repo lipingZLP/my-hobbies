@@ -33,7 +33,7 @@ Route::middleware('auth')->group(function() {
 });
 
 // API routes
-Route::middleware('check.auth')->group(function() {
+//Route::middleware('check.auth')->group(function() {
     Route::post('/api/users/{id}/follow', 'Api\UsersApiController@follow');
     Route::delete('/api/users/{id}/unfollow', 'Api\UsersApiController@unfollow');
     Route::get('/api/users/{id}/followers', 'Api\UsersApiController@getFollowers');
@@ -45,4 +45,4 @@ Route::middleware('check.auth')->group(function() {
     Route::post('/api/hobbies/{id}/comment', 'Api\UsersApiController@addComment');
     Route::get('/api/categories', 'Api\CategoryApiController@getAll');
     Route::get('/api/categories/{id}/hobbies', 'Api\CategoryApiController@getHobbiesByCategory');
-});
+//});

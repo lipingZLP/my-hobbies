@@ -26,7 +26,7 @@ class AddCategories extends Migration
 
         DB::table('categories')->insert(array(
             'name' => 'Movie',
-            'icon' => '🎦'
+            'icon' => '🎬'
         ));
 
         DB::table('categories')->insert(array(

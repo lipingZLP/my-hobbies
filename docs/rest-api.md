@@ -76,7 +76,7 @@ Return user's info + his/her latest hobbies
 ```
 
 
-## PUT /users/me
+## PUT `/users/me`
 
 Edit oneself's info
 
@@ -91,7 +91,7 @@ Edit oneself's info
 ```
 
 
-## POST `/users/{id}/follow
+## POST `/users/{id}/follow`
 
 Follow a user
 
@@ -106,14 +106,14 @@ Follow a user
 ```
 
 
-## POST `/users/{id}/unfollow
+## POST `/users/{id}/unfollow`
 
 ### Response
 
 ```json
 ```
 
-## GET /users/{id}/followers
+## GET `/users/{id}/followers`
 
 Get all the followers
 
@@ -130,7 +130,7 @@ Get all the followers
 }
 ```
 
-## GET /users/{id}/following
+## GET `/users/{id}/following`
 
 Get all the people a given user follows
 
@@ -199,7 +199,7 @@ Return all the comments of a given hobby
 ```
 
 
-## POST /hobbies/{id}/comment
+## POST `/hobbies/{id}/comment`
 
 Add a comment on a hobby
 
@@ -249,7 +249,7 @@ Return the latest 30th posts of a given category
 
 # Currently useless
 
-## GET /users RETURN AN ARRAY CONTAINS ALL THE USERS
+## GET `/users` RETURN AN ARRAY CONTAINS ALL THE USERS
 
 ```json
 {
@@ -264,7 +264,7 @@ Return the latest 30th posts of a given category
 ```
 
 
-## GET /users/me
+## GET `/users/me`
 
 ```json
 {
