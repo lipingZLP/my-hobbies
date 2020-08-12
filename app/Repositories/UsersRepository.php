@@ -58,24 +58,28 @@ class UsersRepository
 
     public function getFollowers($id)
     {
+        $usersql = 'SELECT id, name, nickname, avatar FROM users WHERE id = ?';
+        $userInfoData = DB::selectOne($usersql, [$id]);
         $sql = 'SELECT u.id, u.name, u.nickname, u.avatar
             FROM users u
             INNER JOIN followers f ON f.follower_id = u.id
             WHERE f.user_id = ?';
         $followersInfoData = DB::select($sql, [$id]);
 
-        return new GetFollowers($followersInfoData);
+        return new GetFollowers($userInfoData, $followersInfoData);
     }
 
     public function getFollowing($id)
     {
+        $usersql = 'SELECT id, name, nickname, avatar FROM users WHERE id = ?';
+        $userInfoData = DB::selectOne($usersql, [$id]);
         $sql = 'SELECT u.id, u.name, u.nickname, u.avatar
             FROM users u
             INNER JOIN followers f ON f.user_id = u.id
             WHERE f.follower_id = ?';
         $followingInfoData = DB::select($sql, [$id]);
 
-        return new GetFollowing($followingInfoData);
+        return new GetFollowing($userInfoData, $followingInfoData);
     }
 
     public function addComment($content, $userId, $postId)

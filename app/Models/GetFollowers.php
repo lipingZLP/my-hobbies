@@ -4,11 +4,13 @@ namespace App\Models;
 
 class GetFollowers
 {
+    public $user;
     public $followers = [];
 
-    function __construct($dbData)
+    function __construct($userData, $followersData)
     {
-        foreach ($dbData as $entry) {
+        $this->user = new User($userData);
+        foreach ($followersData as $entry) {
             array_push($this->followers, new User($entry));
         }
     }

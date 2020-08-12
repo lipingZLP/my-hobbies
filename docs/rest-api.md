@@ -119,6 +119,13 @@ Get all the followers
 
 ```json
 {
+    "user": {
+        "id": 4,
+        "name": "Liping",
+        "nickname": "Lime",
+        "avatar": "photo.jpg"
+    },
+
     "followers": [
         {
             "id": 4,
@@ -136,6 +143,13 @@ Get all the people a given user follows
 
 ```json
 {
+    "user": {
+        "id": 4,
+        "name": "Liping",
+        "nickname": "Lime",
+        "avatar": "photo.jpg"
+    },
+
     "following": [
         {
             "id": 4,

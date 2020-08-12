@@ -34,6 +34,14 @@ Route::middleware('auth')->group(function() {
     Route::get('/hobby/{id}', function ($id) {
         return view('comments', ['id' => $id]);
     });
+
+    Route::get('users/{id}/followers', function($id) {
+        return view('followers', ['id' => $id]);
+    });
+
+    Route::get('users/{id}/following', function($id) {
+        return view('following', ['id' => $id]);
+    });
 });
 
 // API routes
