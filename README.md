@@ -21,14 +21,10 @@ php artisan key:generate
 
 ### Setup the database
 
-Create a `myhobbies` database and run Laravel migrations:
+Create a `myhobbies` database:
 
 ```sql
 CREATE DATABASE IF NOT EXISTS `myhobbies`
-```
-
-```sh
-php artisan migrate
 ```
 
 Modify the `my-hobbies/.env` file and set the following:
@@ -40,6 +36,12 @@ DB_HOST=<mysql_server_address>
 DB_DATABASE=myhobbies
 DB_USERNAME=<mysql_username_eg_root>
 DB_PASSWORD=<mysql_password_eg_root>
+```
+
+
+Run Laravel migrations:
+```sh
+php artisan migrate
 ```
 
 
