@@ -2,8 +2,11 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
+                <div>
+                    <button class="btn btn-primary" @click="show = !show">POST NEW COMMENT></button>
+                </div>
+                <br>
                 <div class="card">
-                    <div class="card-header" @click="show = !show">POST NEW COMMENT</div>
                     <div class="card-body" v-show="show">
 
                         <label for="comment">Add your comment</label>
