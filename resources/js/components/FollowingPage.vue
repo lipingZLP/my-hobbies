@@ -1,5 +1,12 @@
 <template>
     <div class="container">
+        <div v-if="loading">
+            Loading...
+        </div>
+
+        <div v-if="error">
+            {{ error }}
+        </div>
         <div>
             {{user.name}}
         </div>
@@ -30,6 +37,8 @@ export default {
 
     data() {
         return {
+            loading: true,
+            error: null,
             user: null,
             followingList: null
         }
@@ -38,10 +47,18 @@ export default {
     mounted() {
         axios.get(`/api/users/${this.$props.user_id}/following`)
             .then(res => {
+                this.loading = false;
                 this.user = res.data.user;
                 this.followingList = res.data.following;
             })
-
+            .catch(err => {
+                this.loading = false;
+                if (err.res.data.error) {
+                    this.error = err.res.data.error.message
+                } else {
+                    this.error = err.message;
+                }
+            })
     }
 }
 </script>

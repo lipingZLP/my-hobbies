@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Admin\UsersList;
 use App\Models\GetFollowers;
 use App\Models\GetFollowing;
 use Illuminate\Support\Facades\DB;
@@ -92,5 +93,13 @@ class UsersRepository
         } catch (QueryException $e) {
             return false;
         }
+    }
+
+    public function getAllForAdmin()
+    {
+        $sql = 'SELECT id, name, nickname, email, avatar, is_admin FROM users';
+        $usersData = DB::select($sql);
+
+        return new UsersList($usersData);
     }
 }

@@ -93,4 +93,10 @@ class UsersApiController extends Controller
 
         return response('{}', 201, ['Content-Type' => 'application/json']);
     }
+
+    public function getAllForAdmin()
+    {
+        $data = $this->repository->getAllForAdmin();
+        return response()->json($data);
+    }
 }
