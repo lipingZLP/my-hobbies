@@ -24,7 +24,7 @@ php artisan key:generate
 Create a `myhobbies` database:
 
 ```sql
-CREATE DATABASE IF NOT EXISTS `myhobbies`
+CREATE DATABASE IF NOT EXISTS `myhobbies`;
 ```
 
 Modify the `my-hobbies/.env` file and set the following:
@@ -48,8 +48,8 @@ php artisan migrate
 ### Compile the frontend part
 
 ```sh
-cd ..
-npm install && npm run dev
+npm install
+npm run dev
 ```
 
 While developing, you can use:
@@ -57,6 +57,11 @@ While developing, you can use:
 ```sh
 npm run watch
 ```
+
+
+### Permission denied errors on storage
+
+Directories within the `storage` and the `bootstrap/cache` should be writable by your web server or Laravel will not run.
 
 
 ### Add an administrator
