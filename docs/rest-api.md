@@ -258,33 +258,23 @@ Return the latest 30th posts of a given category
 ```
 
 
+## GET `/admin/users`
 
+**Admin only**  
 
-
-# Currently useless
-
-## GET `/users` RETURN AN ARRAY CONTAINS ALL THE USERS
+Return an array containing all the users
 
 ```json
 {
     "users": [
-        "id": Number,
-        "name": String,
-        "nickname": String,
-        "email": String,
-        "avatar": String,
+        {
+            "id": 4,
+            "name": "Liping",
+            "nickname": "Lime",
+            "email": "zzz@zzz.fr",
+            "avatar": "photo.jpg",
+            "is_admin": true
+        }
     ]
-}
-```
-
-
-## GET `/users/me`
-
-```json
-{
-    "name":
-    "nickname":
-    "email":
-    "avatar":
 }
 ```
