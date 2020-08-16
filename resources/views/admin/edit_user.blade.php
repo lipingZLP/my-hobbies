@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-    <admin-page></admin-page>
+    <edit-user id="{{ $id }}"></edit-user>
 @endsection

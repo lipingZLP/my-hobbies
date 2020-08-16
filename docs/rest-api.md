@@ -278,3 +278,31 @@ Return an array containing all the users
     ]
 }
 ```
+
+
+## PUT `/admin/users/{id}/edit`
+
+Update a user with given values
+
+### Request
+
+```json
+{
+    "id": 4,
+    "name": "Liping",
+    "nickname": "Lime",
+    "email": "zzz@zzz.fr",
+    "avatar": "photo.jpg",
+    "is_admin": true
+}
+```
+
+
+## DELETE `/admin/users/{id}/delete`
+
+Delete a given user
+
+### Response
+
+```json
+```

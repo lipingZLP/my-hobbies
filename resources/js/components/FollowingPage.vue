@@ -7,23 +7,26 @@
         <div v-if="error">
             {{ error }}
         </div>
-        <div>
-            {{user.name}}
-        </div>
-        <p>@{{user.nickname}} is following:</p>
-        <div class="row">
-            <div class="card-body">
-                <div class="col">
-                    <div v-for="(following, i) in followingList" :key="i">
-                        <div class="row">
-                            <img :src="$store.getters.getProfileLink(following)" class="rounded-circle" width="30" height="30" />
-                            <h6>
-                                <a :href="`/users/${following.nickname}`">
-                                    {{following.name}} @{{following.nickname}}
-                                </a>
-                            </h6>
+
+        <div v-if="user">
+            <div>
+                {{user.name}}
+            </div>
+            <p>@{{user.nickname}} is following:</p>
+            <div class="row">
+                <div class="card-body">
+                    <div class="col">
+                        <div v-for="(following, i) in followingList" :key="i">
+                            <div class="row">
+                                <img :src="$store.getters.getProfileLink(following)" class="rounded-circle" width="30" height="30" />
+                                <h6>
+                                    <a :href="`/users/${following.nickname}`">
+                                        {{following.name}} @{{following.nickname}}
+                                    </a>
+                                </h6>
+                            </div>
+                            <br>
                         </div>
-                        <br>
                     </div>
                 </div>
             </div>
@@ -47,16 +50,16 @@ export default {
     mounted() {
         axios.get(`/api/users/${this.$props.user_id}/following`)
             .then(res => {
-                this.loading = false;
-                this.user = res.data.user;
-                this.followingList = res.data.following;
+                this.loading = false
+                this.user = res.data.user
+                this.followingList = res.data.following
             })
             .catch(err => {
-                this.loading = false;
-                if (err.res.data.error) {
-                    this.error = err.res.data.error.message
+                this.loading = false
+                if (err.response.data.error) {
+                    this.error = err.response.data.error.message
                 } else {
-                    this.error = err.message;
+                    this.error = err.message
                 }
             })
     }

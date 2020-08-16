@@ -7,10 +7,22 @@ use App\Models\GetFollowers;
 use App\Models\GetFollowing;
 use Illuminate\Support\Facades\DB;
 use App\Models\GetSingleUserHobbies;
+use App\Models\User;
 use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Hash;
 
 class UsersRepository
 {
+    public function getById($id)
+    {
+        $sql = 'SELECT id, name, nickname, email, avatar, is_admin
+            FROM users
+            WHERE id = ?';
+        $userData = DB::selectOne($sql, [$id]);
+
+        return new User($userData);
+    }
+
     public function getInfoByUsername($username)
     {
         $userInfoSql = 'SELECT id, name, nickname, avatar,
@@ -101,5 +113,26 @@ class UsersRepository
         $usersData = DB::select($sql);
 
         return new UsersList($usersData);
+    }
+
+    public function update($newName, $newNickname, $newEmail, $password, $newAvatar, $is_admin, $id)
+    {
+        $sql = 'UPDATE users SET name = ?, nickname = ?, email = ?, avatar = ?, is_admin = ?
+            WHERE id = ?';
+
+        try {
+            DB::update($sql, [$newName, $newNickname, $newEmail, $newAvatar, $is_admin, $id]);
+
+            // Update password if specified by user
+            if ($password != null) {
+                $password = Hash::make($password);
+
+                $updatePasswordSql = 'UPDATE users SET password = ? WHERE id = ?';
+                DB::update($updatePasswordSql, [$password, $id]);
+            }
+            return true;
+        } catch (QueryException $e) {
+            return false;
+        }
     }
 }

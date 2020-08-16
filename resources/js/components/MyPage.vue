@@ -8,10 +8,12 @@
             {{ error }}
         </div>
 
-        <div v-if="latest">
+        <div>
             <post-new-hobby></post-new-hobby>
 
             <br>
+        </div>
+        <div v-if="latest">
             <hobbies-list :hobbies="latest.hobbies"></hobbies-list>
         </div>
     </div>

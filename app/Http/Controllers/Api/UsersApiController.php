@@ -16,6 +16,16 @@ class UsersApiController extends Controller
         $this->repository = $repository;
     }
 
+    public function getById($id)
+    {
+        if (!is_numeric($id)) {
+            return response()->json(new Error('Invalid query'), 400);
+        }
+
+        $data = $this->repository->getById($id);
+        return response()->json($data);
+    }
+
     public function getInfoByUsername($username)
     {
         $data = $this->repository->getInfoByUsername($username);
@@ -98,5 +108,33 @@ class UsersApiController extends Controller
     {
         $data = $this->repository->getAllForAdmin();
         return response()->json($data);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $name = $request->input('name');
+        $username = $request->input('nickname');
+
+        if (!preg_match("/^[A-Za-z0-9-_]{1,15}$/", $username)) {
+            return response()->json(new Error('The username may only contain letters, numbers, dashes and underscores and may not be greater than 15 characters.'), 400);
+        }
+
+        $email = $request->input('email');
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            return response()->json(new Error('Invalid email'), 400);
+        }
+
+        $password = $request->input('password');
+        if ($password != null && strlen($password) < 8) {
+            return response()->json(new Error('The password must be at least 8 characters.'), 400);
+        }
+        $avatar = $request->input('avatar');
+        $isAdmin = $request->input('is_admin');
+
+        if (!$this->repository->update($name, $username, $email, $password, $avatar, $isAdmin, $id)) {
+            return response()->json(new Error('Invalid query'), 400);
+        };
+
+        return response('{}', 200, ['Content-Type' => 'application/json']);
     }
 }

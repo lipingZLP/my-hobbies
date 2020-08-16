@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Admin;
 
-class User
+class UserData
 {
     public $id;
     public $name;
@@ -16,15 +16,8 @@ class User
         $this->id = $dbData->id;
         $this->name = $dbData->name;
         $this->nickname = $dbData->nickname;
-
-        if (isset($dbData->email)) {
-            $this->email = $dbData->email;
-        }
-
+        $this->email = $dbData->email;
         $this->avatar = $dbData->avatar;
-
-        if (isset($dbData->is_admin)) {
-            $this->is_admin = $dbData->is_admin === 1;
-        }
+        $this->is_admin = $dbData->is_admin === 1;
     }
 }

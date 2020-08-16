@@ -43,8 +43,14 @@ Route::middleware('auth')->group(function() {
         return view('following', ['id' => $id]);
     });
 
-    Route::middleware('admin')->get('admin/users', function() {
-        return view('admin/users_list');
+    Route::middleware('admin')->group(function() {
+        Route::get('admin/users', function() {
+            return view('admin/users_list');
+        });
+        Route::get('admin/users/{id}/edit', function($id) {
+            return view('admin/edit_user', ['id' => $id]);
+        });
+
     });
 });
 
@@ -62,5 +68,9 @@ Route::middleware('check.auth')->group(function() {
     Route::get('/api/categories', 'Api\CategoryApiController@getAll');
     Route::get('/api/categories/{id}/hobbies', 'Api\CategoryApiController@getHobbiesByCategory');
 
-    Route::middleware('admin')->get('/api/admin/users', 'Api\UsersApiController@getAllForAdmin');
+    Route::middleware('admin')->group(function() {
+        Route::get('/api/admin/users', 'Api\UsersApiController@getAllForAdmin');
+        Route::put('/api/admin/users/{id}/edit', 'Api\UsersApiController@update');
+        Route::get('/api/admin/users/{id}', 'Api\UsersApiController@getById');
+    });
 });
