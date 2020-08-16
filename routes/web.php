@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -72,5 +73,6 @@ Route::middleware('check.auth')->group(function() {
         Route::get('/api/admin/users', 'Api\UsersApiController@getAllForAdmin');
         Route::put('/api/admin/users/{id}/edit', 'Api\UsersApiController@update');
         Route::get('/api/admin/users/{id}', 'Api\UsersApiController@getById');
+        Route::delete('/api/admin/users/{id}/delete', 'Api\UsersApiController@delete');
     });
 });

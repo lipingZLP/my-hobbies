@@ -135,4 +135,18 @@ class UsersRepository
             return false;
         }
     }
+
+    public function delete($id)
+    {
+        $sql = 'DELETE FROM users WHERE id = ? LIMIT 1';
+        try {
+            $affectedRows = DB::delete($sql, [$id]);
+            if ($affectedRows == 0) {
+                return false;
+            }
+            return true;
+        } catch (QueryException $e) {
+            return false;
+        }
+    }
 }

@@ -4,7 +4,7 @@
             Loading...
         </div>
 
-        <div v-if="error">
+        <div class="alert alert-danger" v-if="error">
             {{ error }}
         </div>
 
@@ -31,7 +31,7 @@
                         <td><img :src="$store.getters.getProfileLink(item)" class="rounded-circle" width="30" height="30" /></td>
                         <td>{{item.is_admin}}</td>
                         <td><a :href="`/admin/users/${item.id}/edit`">Edit</a></td>
-                        <td></td>
+                        <td><button><a href="#" @click.prevent="deleteUser(item.id)">Delete</a></button></td>
                     </tr>
                 </tbody>
         </table>
@@ -63,6 +63,25 @@ export default {
                     this.error = err.message;
                 }
             })
-    }
+    },
+
+    methods: {
+        deleteUser(id) {
+            if (confirm('Are you sure you want to delete this user?')) {
+                axios.delete(`/api/admin/users/${id}/delete`)
+                    .then(res => {
+                        document.location.reload(true)
+                    })
+                    .catch(err => {
+                        this.loading = false;
+                        if (err.response.data.error) {
+                            this.error = err.response.data.error.message
+                        } else {
+                            this.error = err.message;
+                        }
+                    })
+            }
+        }
+    },
 }
 </script>

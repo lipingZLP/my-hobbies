@@ -39,13 +39,13 @@ class UsersApiController extends Controller
 
     public function follow($id)
     {
-        $user_id = Auth::id();
+        $userId = Auth::id();
 
         if (!is_numeric($id)) {
             return response()->json(new Error('Invalid query'), 400);
         }
 
-        if (!$this->repository->addFollower($id, $user_id)) {
+        if (!$this->repository->addFollower($id, $userId)) {
             return response()->json(new Error('Invalid query'), 400);
         }
 
@@ -54,13 +54,13 @@ class UsersApiController extends Controller
 
     public function unfollow($id)
     {
-        $user_id = Auth::id();
+        $userId = Auth::id();
 
         if (!is_numeric($id)) {
             return response()->json(new Error('Invalid query'), 400);
         }
 
-        if (!$this->repository->unfollow($id, $user_id)) {
+        if (!$this->repository->unfollow($id, $userId)) {
             return response()->json(new Error('Not found'), 404);
         };
 
@@ -89,7 +89,7 @@ class UsersApiController extends Controller
 
     public function addComment(Request $request, $id)
     {
-        $user_id = Auth::id();
+        $userId = Auth::id();
 
         if (!is_numeric($id)) {
             return response()->json(new Error('Invalid query'), 400);
@@ -97,7 +97,7 @@ class UsersApiController extends Controller
 
         $content = $request->input('content');
 
-        if (!$this->repository->addComment($content, $user_id, $id)) {
+        if (!$this->repository->addComment($content, $userId, $id)) {
             return response()->json(new Error('Invalid query'), 400);
         }
 
@@ -134,6 +134,22 @@ class UsersApiController extends Controller
         if (!$this->repository->update($name, $username, $email, $password, $avatar, $isAdmin, $id)) {
             return response()->json(new Error('Invalid query'), 400);
         };
+
+        return response('{}', 200, ['Content-Type' => 'application/json']);
+    }
+
+    public function delete($id)
+    {
+        $userId = Auth::id();
+
+        if ($id == $userId) {
+            return response()->json(new Error('You are not allowed to delete yourself.'), 400);
+        }
+
+        $success = $this->repository->delete($id);
+        if (!$success) {
+            return response()->json(new Error('Error deleting user ' . $id), 400);
+        }
 
         return response('{}', 200, ['Content-Type' => 'application/json']);
     }
