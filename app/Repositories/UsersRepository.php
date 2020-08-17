@@ -115,21 +115,30 @@ class UsersRepository
         return new UsersList($usersData);
     }
 
-    public function update($newName, $newNickname, $newEmail, $password, $newAvatar, $is_admin, $id)
+    public function update($name, $nickname, $email, $password, $avatar, $isAdmin, $id)
     {
-        $sql = 'UPDATE users SET name = ?, nickname = ?, email = ?, avatar = ?, is_admin = ?
-            WHERE id = ?';
+        $sql = 'UPDATE users SET name = ?, nickname = ?, email = ?, avatar = ?';
+        $sqlArgs = [$name, $nickname, $email, $avatar];
+
+        // If we modify user from admin page
+        if ($isAdmin != null) {
+            $sql .= ', is_admin = ?';
+            array_push($sqlArgs, $isAdmin);
+        }
+
+        // If user wants to update his/her password
+        if ($password != null) {
+            $password = Hash::make($password);
+            $sql .= ', password = ?';
+            array_push($sqlArgs, $password);
+        }
+
+        // Finish SQL query
+        $sql .= ' WHERE id = ? LIMIT 1';
+        array_push($sqlArgs, $id);
 
         try {
-            DB::update($sql, [$newName, $newNickname, $newEmail, $newAvatar, $is_admin, $id]);
-
-            // Update password if specified by user
-            if ($password != null) {
-                $password = Hash::make($password);
-
-                $updatePasswordSql = 'UPDATE users SET password = ? WHERE id = ?';
-                DB::update($updatePasswordSql, [$password, $id]);
-            }
+            DB::update($sql, $sqlArgs);
             return true;
         } catch (QueryException $e) {
             return false;

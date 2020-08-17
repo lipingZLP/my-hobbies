@@ -44,6 +44,10 @@ Route::middleware('auth')->group(function() {
         return view('following', ['id' => $id]);
     });
 
+    Route::get('users/me/edit', function() {
+        return view('edit_profile');
+    });
+
     Route::middleware('admin')->group(function() {
         Route::get('admin/users', function() {
             return view('admin/users_list');
@@ -57,11 +61,13 @@ Route::middleware('auth')->group(function() {
 
 // API routes
 Route::middleware('check.auth')->group(function() {
+    Route::get('/api/users/{username}', 'Api\UsersApiController@getInfoByUsername');
+    Route::get('/api/users/id/{id}', 'Api\UsersApiController@getById');
+    Route::put('/api/users/{id}/edit', 'Api\UsersApiController@update');
     Route::post('/api/users/{id}/follow', 'Api\UsersApiController@follow');
     Route::delete('/api/users/{id}/unfollow', 'Api\UsersApiController@unfollow');
     Route::get('/api/users/{id}/followers', 'Api\UsersApiController@getFollowers');
     Route::get('/api/users/{id}/following', 'Api\UsersApiController@getFollowing');
-    Route::get('/api/users/{username}', 'Api\UsersApiController@getInfoByUsername');
     Route::post('/api/hobbies/add', 'Api\HobbiesApiController@add');
     Route::get('/api/hobbies/latest', 'Api\HobbiesApiController@showHobbies');
     Route::get('/api/hobbies/{id}/comments', 'Api\HobbiesApiController@getComments');
@@ -71,8 +77,8 @@ Route::middleware('check.auth')->group(function() {
 
     Route::middleware('admin')->group(function() {
         Route::get('/api/admin/users', 'Api\UsersApiController@getAllForAdmin');
-        Route::put('/api/admin/users/{id}/edit', 'Api\UsersApiController@update');
         Route::get('/api/admin/users/{id}', 'Api\UsersApiController@getById');
+        Route::put('/api/admin/users/{id}/edit', 'Api\UsersApiController@update');
         Route::delete('/api/admin/users/{id}/delete', 'Api\UsersApiController@delete');
     });
 });

@@ -129,6 +129,7 @@ class UsersApiController extends Controller
             return response()->json(new Error('The password must be at least 8 characters.'), 400);
         }
         $avatar = $request->input('avatar');
+
         $isAdmin = $request->input('is_admin');
 
         if (!$this->repository->update($name, $username, $email, $password, $avatar, $isAdmin, $id)) {

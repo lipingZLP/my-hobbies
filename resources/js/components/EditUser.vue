@@ -32,22 +32,25 @@
                             <br>
                             <label for="password">Password: </label>
                             <input type="password" id="password" class="form-control"
-                                    v-model="userData.password">
+                                    v-model="userData.password" placeholder="Leave empty to keep current password">
                             <br>
                             <label for="avatar">Avatar: </label>
                             <input type="text" id="avatar" class="form-control"
                                    v-model="userData.avatar">
-                            <br>
-                            <label for="is_admin">Is admin: </label>
 
-                            <div class="form-group row">
-                                <div class="col-lg">
-                                    <input type="radio" id="is_admin" v-bind:value="true"
-                                           v-model="userData.is_admin">
-                                    <label for="is_admin">Yes</label>
-                                    <input type="radio" id="not_admin" v-bind:value="false"
-                                           v-model="userData.is_admin">
-                                    <label for="not_admin">No</label>
+                            <div v-if="$props.admin">
+                                <br>
+                                <label for="is_admin">Is admin: </label>
+
+                                <div class="form-group row">
+                                    <div class="col-lg">
+                                        <input type="radio" id="is_admin" v-bind:value="true"
+                                            v-model="userData.is_admin">
+                                        <label for="is_admin">Yes</label>
+                                        <input type="radio" id="not_admin" v-bind:value="false"
+                                            v-model="userData.is_admin">
+                                        <label for="not_admin">No</label>
+                                    </div>
                                 </div>
                             </div>
                             <br>
@@ -63,7 +66,7 @@
 
 <script>
 export default {
-    props:['id'],
+    props: ['id', 'admin'],
 
     data() {
         return {
@@ -76,10 +79,24 @@ export default {
 
     methods: {
         submitted() {
-            axios.put(`/api/admin/users/${this.$props.id}/edit`, this.userData)
+            let url;
+            if (this.$props.admin) {
+                url = `/api/admin/users/${this.$props.id}/edit`
+            } else {
+                url =  `/api/users/${this.$props.id}/edit`
+            }
+
+            axios.put(url, this.userData)
                 .then(res => {
                     this.loading = false
-                    window.location.replace("/admin/users")
+
+                    let url;
+                    if (this.$props.admin) {
+                        url = '/admin/users'
+                    } else {
+                        url = '/users/me/edit'
+                    }
+                    window.location.replace(url)
                 })
                 .catch(err => {
                     this.loading = false
@@ -90,13 +107,20 @@ export default {
                     }
 
                     // Scroll to the top to see errors
-                    window.scrollTo(0, 0);
+                    window.scrollTo(0, 0)
                 })
         }
     },
 
     mounted() {
-        axios.get(`/api/admin/users/${this.$props.id}`)
+        let url;
+        if (this.$props.admin) {
+            url =  `/api/admin/users/${this.$props.id}`
+        } else {
+            url =  `/api/users/id/${this.$props.id}`
+        }
+
+        axios.get(url)
             .then(res => {
                 this.loading = false
                 this.userData = res.data

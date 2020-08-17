@@ -18,7 +18,7 @@
                     <td>Username</td>
                     <td>Email</td>
                     <td>Avatar</td>
-                    <td>Is_Admin</td>
+                    <td>Is Admin</td>
                     <td colspan="2">Action</td>
                     </tr>
                 </thead>
