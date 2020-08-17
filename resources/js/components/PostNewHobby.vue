@@ -2,8 +2,11 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
+                <div>
+                    <button class="btn btn-primary" @click="show = !show">POST NEW HOBBY</button>
+                </div>
+                <br>
                 <div class="card">
-                    <div class="card-header" @click="show = !show">POST NEW HOBBY</div>
                     <div class="card-body" v-show="show">
                         <label for="category">Category (1: 🌍 - 2: 🎵 - 3: 🎬 - 4: 📖 - 5: 🎮)</label>
                         <input min="1" max="5" type="number" id="category" class="form-control"
