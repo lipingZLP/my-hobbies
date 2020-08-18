@@ -20,17 +20,26 @@ class HobbiesApiController extends Controller
     {
         $user_id = Auth::id();
 
-        if (!$request->has('categoryId') ||
-             !$request->has('title') ||
-             !$request->has('description') ||
-             !$request->has('rating')) {
-            return response()->json(new Error('Invalid query'), 400);
-        }
-
         $categoryId = $request->input('categoryId');
         $title = $request->input('title');
         $description = $request->input('description');
         $rating = $request->input('rating');
+
+        if (!isset($categoryId)) {
+            return $this->error('You must specify a category.');
+        }
+
+        if (!$title || empty($title)) {
+            return $this->error('You must specify a title.');
+        }
+
+        if (!$description || empty($description)) {
+            return $this->error('You must specify a description.');
+        }
+
+        if (!isset($rating)) {
+            return $this->error('You must specify a rating.');
+        }
 
         $this->repository->add($user_id, $categoryId, $title, $description, $rating);
 
@@ -49,5 +58,9 @@ class HobbiesApiController extends Controller
     {
         $data = $this->repository->getCommentsById($id);
         return response()->json($data);
+    }
+
+    private function error($message) {
+        return response()->json(new Error($message), 400);
     }
 }

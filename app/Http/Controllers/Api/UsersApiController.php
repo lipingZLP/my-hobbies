@@ -19,7 +19,7 @@ class UsersApiController extends Controller
     public function getById($id)
     {
         if (!is_numeric($id)) {
-            return response()->json(new Error('Invalid query'), 400);
+            return $this->error('Invalid query');
         }
 
         $data = $this->repository->getById($id);
@@ -42,11 +42,11 @@ class UsersApiController extends Controller
         $userId = Auth::id();
 
         if (!is_numeric($id)) {
-            return response()->json(new Error('Invalid query'), 400);
+            return $this->error('Invalid query');
         }
 
         if (!$this->repository->addFollower($id, $userId)) {
-            return response()->json(new Error('Invalid query'), 400);
+            return $this->error('Invalid query');
         }
 
         return response('{}', 201, ['Content-Type' => 'application/json']);
@@ -57,7 +57,7 @@ class UsersApiController extends Controller
         $userId = Auth::id();
 
         if (!is_numeric($id)) {
-            return response()->json(new Error('Invalid query'), 400);
+            return $this->error('Invalid query');
         }
 
         if (!$this->repository->unfollow($id, $userId)) {
@@ -70,7 +70,7 @@ class UsersApiController extends Controller
     public function getFollowers($id)
     {
         if (!is_numeric($id)) {
-            return response()->json(new Error('Invalid query'), 400);
+            return $this->error('Invalid query');
         }
 
         $data = $this->repository->getFollowers($id);
@@ -80,7 +80,7 @@ class UsersApiController extends Controller
     public function getFollowing($id)
     {
         if (!is_numeric($id)) {
-            return response()->json(new Error('Invalid query'), 400);
+            return $this->error('Invalid query');
         }
 
         $data = $this->repository->getFollowing($id);
@@ -92,13 +92,17 @@ class UsersApiController extends Controller
         $userId = Auth::id();
 
         if (!is_numeric($id)) {
-            return response()->json(new Error('Invalid query'), 400);
+            return $this->error('Invalid query');
         }
 
         $content = $request->input('content');
 
+        if (!isset($content)) {
+            return $this->error('You must specify a comment.');
+        }
+
         if (!$this->repository->addComment($content, $userId, $id)) {
-            return response()->json(new Error('Invalid query'), 400);
+            return $this->error('Invalid query');
         }
 
         return response('{}', 201, ['Content-Type' => 'application/json']);
@@ -116,24 +120,24 @@ class UsersApiController extends Controller
         $username = $request->input('nickname');
 
         if (!preg_match("/^[A-Za-z0-9-_]{1,15}$/", $username)) {
-            return response()->json(new Error('The username may only contain letters, numbers, dashes and underscores and may not be greater than 15 characters.'), 400);
+            return $this->error('The username may only contain letters, numbers, dashes and underscores and may not be greater than 15 characters.');
         }
 
         $email = $request->input('email');
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            return response()->json(new Error('Invalid email'), 400);
+            return $this->error('Invalid email');
         }
 
         $password = $request->input('password');
         if ($password != null && strlen($password) < 8) {
-            return response()->json(new Error('The password must be at least 8 characters.'), 400);
+            return $this->error('The password must be at least 8 characters.');
         }
         $avatar = $request->input('avatar');
 
         $isAdmin = $request->input('is_admin');
 
         if (!$this->repository->update($name, $username, $email, $password, $avatar, $isAdmin, $id)) {
-            return response()->json(new Error('Invalid query'), 400);
+            return $this->error('Invalid query');
         };
 
         return response('{}', 200, ['Content-Type' => 'application/json']);
@@ -144,14 +148,18 @@ class UsersApiController extends Controller
         $userId = Auth::id();
 
         if ($id == $userId) {
-            return response()->json(new Error('You are not allowed to delete yourself.'), 400);
+            return $this->error('You are not allowed to delete yourself.');
         }
 
         $success = $this->repository->delete($id);
         if (!$success) {
-            return response()->json(new Error('Error deleting user ' . $id), 400);
+            return $this->error('Error deleting user ' . $id);
         }
 
         return response('{}', 200, ['Content-Type' => 'application/json']);
+    }
+
+    private function error($message) {
+        return response()->json(new Error($message), 400);
     }
 }
