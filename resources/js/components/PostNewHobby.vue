@@ -53,11 +53,13 @@
 
 <script>
 export default {
+    props: ['categoryId'],
+
     data() {
         return {
             show: false,
             formData: {
-                categoryId: null,
+                categoryId: this.$props.categoryId || null,
                 title: '',
                 description: '',
                 rating: null

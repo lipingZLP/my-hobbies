@@ -10,6 +10,7 @@
 
         <div v-if="categoriesData">
             <h1>{{ categoriesData.category.icon }} {{ categoriesData.category.name }}</h1>
+            <post-new-hobby :categoryId="$props.id"></post-new-hobby>
 
             <hobbies-list :hobbies="categoriesData.hobbies"></hobbies-list>
         </div>
