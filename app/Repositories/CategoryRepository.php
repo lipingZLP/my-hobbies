@@ -6,7 +6,7 @@ use App\Models\GetAllCategories;
 use App\Models\GetHobbiesByCategory;
 use Illuminate\Support\Facades\DB;
 
-class CategoryRepository
+class CategoryRepository extends Repository
 {
     public function getAll()
     {

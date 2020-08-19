@@ -5,8 +5,9 @@ namespace App\Repositories;
 use App\Models\ShowHobbies;
 use App\Models\ShowComments;
 use Illuminate\Support\Facades\DB;
+use App\Models\Pagination;
 
-class HobbiesRepository
+class HobbiesRepository extends Repository
 {
     public function add($user_id, $categoryId, $title, $description, $rating)
     {
@@ -29,17 +30,24 @@ class HobbiesRepository
         return new ShowHobbies($ShowHobbiesData);
     }
 
-    public function getCommentsById($id)
+    public function getCommentsById($id, $curPage)
     {
+        $totalPages = $this->getCount('SELECT CEILING(COUNT(id) / ' . Constants::COMMENTS_PER_PAGE . ') as count
+            FROM comments
+            WHERE post_id = ?', [$id]);
+
         $sql = 'SELECT c.id as cid, c.content,
             u.id, u.name, u.nickname, u.avatar
             FROM comments c
             INNER JOIN users u ON c.user_id = u.id
             WHERE c.post_id = ?
-            ORDER BY c.id DESC';
+            ORDER BY c.id DESC
+            LIMIT ' . Constants::COMMENTS_PER_PAGE . '
+            OFFSET ' . ($curPage - 1) * Constants::COMMENTS_PER_PAGE;
 
         $commentsData = DB::select($sql, [$id]);
+        $pagination = new Pagination($curPage, $totalPages);
 
-        return new ShowComments($commentsData);
+        return new ShowComments($commentsData, $pagination);
     }
 }

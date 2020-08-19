@@ -12,7 +12,7 @@ use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Hash;
 
-class UsersRepository
+class UsersRepository extends Repository
 {
     public function getById($id)
     {
@@ -110,13 +110,13 @@ class UsersRepository
 
     public function getAllForAdmin($curPage)
     {
-        $totalPages = $this->getCount('SELECT CEILING(COUNT(id) / ' . Constants::ITEMS_PER_PAGE . ') as count FROM users');
+        $totalPages = $this->getCount('SELECT CEILING(COUNT(id) / ' . Constants::USERS_PER_PAGE . ') as count FROM users');
 
         $sql = 'SELECT id, name, nickname, email, avatar, is_admin
             FROM users
             ORDER BY id ASC
-            LIMIT ' . Constants::ITEMS_PER_PAGE . '
-            OFFSET ' . ($curPage - 1) * Constants::ITEMS_PER_PAGE;
+            LIMIT ' . Constants::USERS_PER_PAGE . '
+            OFFSET ' . ($curPage - 1) * Constants::USERS_PER_PAGE;
 
         $usersData = DB::select($sql);
         $pagination = new Pagination($curPage, $totalPages);
@@ -166,10 +166,5 @@ class UsersRepository
         } catch (QueryException $e) {
             return false;
         }
-    }
-
-    private function getCount($sql, $args = []) {
-        $data = DB::selectOne($sql, $args);
-        return $data->count;
     }
 }

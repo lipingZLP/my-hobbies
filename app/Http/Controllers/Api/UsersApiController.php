@@ -163,14 +163,4 @@ class UsersApiController extends Controller
     private function error($message) {
         return response()->json(new Error($message), 400);
     }
-
-    private function getPage(Request $request) {
-        $page = $request->input('page');
-        if (isset($page)) {
-            $page = intval($page);
-        } else {
-            $page = 1;
-        }
-        return $page;
-    }
 }

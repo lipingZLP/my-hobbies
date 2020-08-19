@@ -54,9 +54,10 @@ class HobbiesApiController extends Controller
         return response()->json($data);
     }
 
-    public function getComments($id)
+    public function getComments(Request $request, $id)
     {
-        $data = $this->repository->getCommentsById($id);
+        $page = $this->getPage($request);
+        $data = $this->repository->getCommentsById($id, $page);
         return response()->json($data);
     }
 

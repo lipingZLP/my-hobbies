@@ -4,5 +4,6 @@ namespace App\Repositories;
 
 class Constants {
 
-    const ITEMS_PER_PAGE = 8;
+    const USERS_PER_PAGE = 10;
+    const COMMENTS_PER_PAGE = 6;
 }

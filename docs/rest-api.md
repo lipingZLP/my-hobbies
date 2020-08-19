@@ -192,7 +192,8 @@ Return the latest 30th posts from people you follow
 
 ## GET `/hobbies/{id}/comments`
 
-Return all the comments of a given hobby
+Return all the comments of a given hobby.  
+Add `?page=2` to list comments from the second page.
 
 ```json
 {
@@ -208,7 +209,11 @@ Return all the comments of a given hobby
           "content": "commentaire1"
         },
         ...
-    ]
+    ],
+    "pagination": {
+        "curPage": 1,
+        "totalPages": 30
+    }
 }
 ```
 

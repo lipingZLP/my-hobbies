@@ -36,7 +36,7 @@
                 </tbody>
             </table>
 
-            <pagination :currentPage="pagination.curPage" :totalPages="pagination.totalPages" v-on:changePage="loadPage"></pagination>
+            <pagination :currentPage="pagination.curPage" :totalPages="pagination.totalPages" @changePage="loadPage"></pagination>
        </div>
     </div>
 </template>
