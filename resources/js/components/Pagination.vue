@@ -2,16 +2,16 @@
     <div class="row justify-content-center">
         <ul class="pagination">
             <li v-bind:class="getCssLiClass(0)">
-                <a class="page-link" href="#" aria-label="Previous">
+                <a class="page-link" href="#" @click.prevent="changePage(0)" aria-label="Previous">
                     <span aria-hidden="true">&laquo;</span>
                     <span class="sr-only">Previous</span>
                 </a>
             </li>
 
-            <li v-for="(curPage, index) in getPagesArray()" :key="index" v-bind:class="getCssLiClass(index + 1)"><a class="page-link" href="#">{{ curPage }}</a></li>
+            <li v-for="(curPage, index) in getPagesArray()" :key="index" v-bind:class="getCssLiClass(index + 1)"><a class="page-link" href="#" @click.prevent="changePage(index + 1)">{{ curPage }}</a></li>
 
             <li v-bind:class="getCssLiClass(7)">
-                <a class="page-link" href="#" aria-label="Next">
+                <a class="page-link" href="#" @click.prevent="changePage(7)" aria-label="Next">
                     <span aria-hidden="true">&raquo;</span>
                     <span class="sr-only">Next</span>
                 </a>
@@ -45,6 +45,27 @@ export default {
             }
 
             return startFrom
+        },
+
+        changePage(page) {
+            let newPage;
+
+            // Previous
+            if (page == 0) {
+                newPage = this.$props.currentPage - 1
+            }
+
+            // Default pages
+            if (page > 0 && page < 7) {
+                newPage = page + this.getStartFrom() - 1
+            }
+
+            // Next
+            if (page == 7) {
+                newPage = this.$props.currentPage + 1
+            }
+
+            this.$emit('changePage', newPage)
         },
 
         getCssLiClass(page) {

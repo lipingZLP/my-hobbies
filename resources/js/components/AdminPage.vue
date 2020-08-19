@@ -36,7 +36,7 @@
                 </tbody>
             </table>
 
-            <pagination :currentPage="pagination.curPage" :totalPages="pagination.totalPages"></pagination>
+            <pagination :currentPage="pagination.curPage" :totalPages="pagination.totalPages" v-on:changePage="loadPage"></pagination>
        </div>
     </div>
 </template>
@@ -48,30 +48,34 @@ export default {
             loading: true,
             error: null,
             usersList: null,
-            pagination: {
-                curPage: 1
-            }
+            pagination: null
         }
     },
 
     mounted() {
-        axios.get(`/api/admin/users?page=${this.pagination.curPage}`)
-            .then(res => {
-                this.loading = false;
-                this.usersList = res.data.users;
-                this.pagination = res.data.pagination;
-            })
-            .catch(err => {
-                this.loading = false;
-                if (err.response.data.error) {
-                    this.error = err.response.data.error.message
-                } else {
-                    this.error = err.message;
-                }
-            })
+        this.loadPage(1)
     },
 
     methods: {
+        loadPage(page) {
+            this.loading = true;
+
+            axios.get(`/api/admin/users?page=${page}`)
+                .then(res => {
+                    this.loading = false;
+                    this.usersList = res.data.users;
+                    this.pagination = res.data.pagination;
+                })
+                .catch(err => {
+                    this.loading = false;
+                    if (err.response.data.error) {
+                        this.error = err.response.data.error.message
+                    } else {
+                        this.error = err.message;
+                    }
+                })
+        },
+
         deleteUser(id) {
             if (confirm('Are you sure you want to delete this user?')) {
                 axios.delete(`/api/admin/users/${id}/delete`)
