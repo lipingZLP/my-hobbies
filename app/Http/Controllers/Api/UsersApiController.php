@@ -108,9 +108,10 @@ class UsersApiController extends Controller
         return response('{}', 201, ['Content-Type' => 'application/json']);
     }
 
-    public function getAllForAdmin()
+    public function getAllForAdmin(Request $request)
     {
-        $data = $this->repository->getAllForAdmin();
+        $page = $this->getPage($request);
+        $data = $this->repository->getAllForAdmin($page);
         return response()->json($data);
     }
 
@@ -161,5 +162,15 @@ class UsersApiController extends Controller
 
     private function error($message) {
         return response()->json(new Error($message), 400);
+    }
+
+    private function getPage(Request $request) {
+        $page = $request->input('page');
+        if (isset($page)) {
+            $page = intval($page);
+        } else {
+            $page = 1;
+        }
+        return $page;
     }
 }

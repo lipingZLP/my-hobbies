@@ -35,6 +35,8 @@
                     </tr>
                 </tbody>
             </table>
+
+            <pagination :currentPage="pagination.curPage" :totalPages="pagination.totalPages"></pagination>
        </div>
     </div>
 </template>
@@ -45,15 +47,19 @@ export default {
         return {
             loading: true,
             error: null,
-            usersList: null
+            usersList: null,
+            pagination: {
+                curPage: 1
+            }
         }
     },
 
     mounted() {
-        axios.get('/api/admin/users')
+        axios.get(`/api/admin/users?page=${this.pagination.curPage}`)
             .then(res => {
                 this.loading = false;
                 this.usersList = res.data.users;
+                this.pagination = res.data.pagination;
             })
             .catch(err => {
                 this.loading = false;

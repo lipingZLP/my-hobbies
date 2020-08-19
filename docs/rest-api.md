@@ -262,7 +262,8 @@ Return the latest 30th posts of a given category
 
 **Admin only**  
 
-Return an array containing all the users
+Return an array containing all the users.  
+Add `?page=2` to list users from the second page.
 
 ```json
 {
@@ -275,7 +276,12 @@ Return an array containing all the users
             "avatar": "photo.jpg",
             "is_admin": true
         }
-    ]
+    ],
+
+    "pagination": {
+        "curPage": 1,
+        "totalPages": 30
+    }
 }
 ```
 

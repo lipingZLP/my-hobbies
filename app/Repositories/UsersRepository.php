@@ -7,6 +7,7 @@ use App\Models\GetFollowers;
 use App\Models\GetFollowing;
 use Illuminate\Support\Facades\DB;
 use App\Models\GetSingleUserHobbies;
+use App\Models\Pagination;
 use App\Models\User;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Hash;
@@ -47,8 +48,8 @@ class UsersRepository
     public function addFollower($userId, $followerId)
     {
         $countSql = 'SELECT COUNT(id) as count FROM followers WHERE user_id = ? AND follower_id = ?';
-        $data = DB::selectOne($countSql, [$userId, $followerId]);
-        if ($data->count > 0) {
+        $hasAlreadyFollower = $this->getCount($countSql, [$userId, $followerId]);
+        if ($hasAlreadyFollower > 0) {
             return false;
         }
 
@@ -107,12 +108,20 @@ class UsersRepository
         }
     }
 
-    public function getAllForAdmin()
+    public function getAllForAdmin($curPage)
     {
-        $sql = 'SELECT id, name, nickname, email, avatar, is_admin FROM users';
-        $usersData = DB::select($sql);
+        $totalPages = $this->getCount('SELECT CEILING(COUNT(id) / ' . Constants::ITEMS_PER_PAGE . ') as count FROM users');
 
-        return new UsersList($usersData);
+        $sql = 'SELECT id, name, nickname, email, avatar, is_admin
+            FROM users
+            ORDER BY id ASC
+            LIMIT ' . Constants::ITEMS_PER_PAGE . '
+            OFFSET ' . ($curPage - 1) * Constants::ITEMS_PER_PAGE;
+
+        $usersData = DB::select($sql);
+        $pagination = new Pagination($curPage, $totalPages);
+
+        return new UsersList($usersData, $pagination);
     }
 
     public function update($name, $nickname, $email, $password, $avatar, $isAdmin, $id)
@@ -157,5 +166,10 @@ class UsersRepository
         } catch (QueryException $e) {
             return false;
         }
+    }
+
+    private function getCount($sql, $args = []) {
+        $data = DB::selectOne($sql, $args);
+        return $data->count;
     }
 }
