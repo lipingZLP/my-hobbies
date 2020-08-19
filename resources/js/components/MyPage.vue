@@ -9,10 +9,14 @@
         </div>
 
         <div>
-            <post-new-hobby></post-new-hobby>
+            <div class="row justify-content-center">
+                <h2>🏠 {{ username}}'s Home</h2>
+            </div>
 
+            <post-new-hobby></post-new-hobby>
             <br>
         </div>
+
         <div v-if="latest">
             <hobbies-list :hobbies="latest.hobbies"></hobbies-list>
         </div>
@@ -21,6 +25,8 @@
 
 <script>
 export default {
+    props: ['username'],
+
     data() {
         return {
             loading: true,

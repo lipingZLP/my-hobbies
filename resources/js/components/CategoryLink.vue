@@ -8,11 +8,11 @@
     </div>
 </template>
 
-<style>
-.nav {
-    margin-right: 100px;
-}
-.nav-link {
-    margin-right: 20px;
-}
+<style scoped>
+    .nav {
+        margin-right: 55px;
+    }
+    .nav-link {
+        margin-right: 10px;
+    }
 </style>

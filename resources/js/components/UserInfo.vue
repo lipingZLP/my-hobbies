@@ -2,7 +2,7 @@
     <div>
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-md-8">
+                <div class="col-md-9">
                     <div class="card">
                         <div class="card-body">
                             <div class="row">
@@ -14,10 +14,10 @@
                                     <h4>{{user.name}}</h4>
                                     <h6>@{{user.nickname}}</h6>
 
-                                    <h6><a :href="`/users/${user.id}/following`"><b>{{user.following}}</b> following</a></h6>
-                                    <h6><a :href="`/users/${user.id}/followers`"><b>{{user.followers}}</b> followers</a></h6>
+                                    <h6 v-if="!small"><a :href="`/users/${user.id}/following`"><b>{{user.following}}</b> following</a></h6>
+                                    <h6 v-if="!small"><a :href="`/users/${user.id}/followers`"><b>{{user.followers}}</b> followers</a></h6>
 
-                                    <follow-button :id="user.id"></follow-button>
+                                    <follow-button :id="user.id" v-if="!small"></follow-button>
                                 </div>
                             </div>
                         </div>
@@ -30,6 +30,6 @@
 
 <script>
 export default {
-    props: ['user']
+    props: ['user', 'small']
 }
 </script>

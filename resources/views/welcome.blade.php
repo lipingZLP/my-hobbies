@@ -4,7 +4,9 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>My Hobbies | Find people who share the same hobbies with you!</title>
+        <meta name="description" content="Share your hobbies with people who have the same passion as yours.">
+        <meta name="keywords" content="music, movie, reading, gaming, travel, share my passion, entertainment, spare time hobby">
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
@@ -12,10 +14,10 @@
         <!-- Styles -->
         <style>
             html, body {
-                background-color: #fff;
-                color: #636b6f;
+                background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(7,97,145,1) 52%, rgba(0,212,255,1) 100%);
+                color: #F5F5F5;
                 font-family: 'Nunito', sans-serif;
-                font-weight: 200;
+                font-weight: 300;
                 height: 100vh;
                 margin: 0;
             }
@@ -45,21 +47,22 @@
             }
 
             .title {
-                font-size: 84px;
+                font-size: 40px;
+            }
+
+            .subtitle {
+                font-size: 23px;
             }
 
             .links > a {
-                color: #636b6f;
+                color: #F5F5F5;
                 padding: 0 25px;
-                font-size: 13px;
+                font-size: 23px;
                 font-weight: 600;
                 letter-spacing: .1rem;
                 text-decoration: none;
                 text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
+                text-shadow: 2px 2px 4px #042D57;
             }
         </style>
 
@@ -87,7 +90,9 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    {{ config('app.name', 'My Hobbies') }}
+                    <img src="images/logo.png" width="100"><br>
+                    My hobbies<br>
+                    <p class="subtitle">Find people who share the same hobbies with you!</p>
                 </div>
             </div>
         </div>

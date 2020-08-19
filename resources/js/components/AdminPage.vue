@@ -34,7 +34,7 @@
                         <td><button><a href="#" @click.prevent="deleteUser(item.id)">Delete</a></button></td>
                     </tr>
                 </tbody>
-        </table>
+            </table>
        </div>
     </div>
 </template>

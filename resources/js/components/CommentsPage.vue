@@ -10,7 +10,6 @@
 
         <div v-if="commentsData">
             <post-new-comment :hobby_id="hobby_id"></post-new-comment>
-
             <br>
             <comments-list :comments="commentsData"></comments-list>
         </div>

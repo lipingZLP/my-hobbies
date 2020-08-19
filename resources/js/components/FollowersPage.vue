@@ -10,23 +10,24 @@
 
         <div v-if="user">
             <div>
-                {{user.name}}
+                <user-info :user="user" :small="true"></user-info>
             </div>
-            <p>@{{user.nickname}} has followers:</p>
-            <div class="row">
-                <div class="card-body">
-                    <div class="col">
-                        <div v-for="(follower, i) in followersList" :key="i">
-                            <div class="row">
-                                <img :src="$store.getters.getProfileLink(follower)" class="rounded-circle" width="30" height="30" />
-                                <h6>
-                                    <a :href="`/users/${follower.nickname}`">
-                                        {{follower.name}} @{{follower.nickname}}
-                                    </a>
-                                </h6>
-                            </div>
-                            <br>
+
+            <div class="row justify-content-center">
+                <div class="col-md-9">
+                    <br>
+                    <h4>Followers:</h4><br>
+
+                    <div v-for="(follower, i) in followersList" :key="i">
+                        <div class="row">
+                            <img :src="$store.getters.getProfileLink(follower)" class="rounded-circle" width="30" height="30" />
+                            <h6>
+                                <a :href="`/users/${follower.nickname}`">
+                                    {{follower.name}} @{{follower.nickname}}
+                                </a>
+                            </h6>
                         </div>
+                        <br>
                     </div>
                 </div>
             </div>

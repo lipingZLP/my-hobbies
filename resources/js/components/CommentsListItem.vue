@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="container">
-            <div class="row">
+            <div class="row item">
                 <div class="col-auto">
                     <img :src="$store.getters.getProfileLink(comment.author)" class="rounded-circle" width="30" height="30" />
                 </div>
@@ -25,3 +25,9 @@ export default {
     props: ['comment'],
 }
 </script>
+
+<style scoped>
+    .row.item:hover {
+        background-color:#f9f9f9;
+    }
+</style>

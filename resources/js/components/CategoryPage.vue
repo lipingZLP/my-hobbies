@@ -9,9 +9,12 @@
         </div>
 
         <div v-if="categoriesData">
-            <h1>{{ categoriesData.category.icon }} {{ categoriesData.category.name }}</h1>
-            <post-new-hobby :categoryId="$props.id"></post-new-hobby>
+            <div class="row justify-content-center">
+                <h2>{{ categoriesData.category.icon }} {{ categoriesData.category.name }}</h2>
+            </div>
 
+            <post-new-hobby :categoryId="$props.id"></post-new-hobby>
+            <br>
             <hobbies-list :hobbies="categoriesData.hobbies"></hobbies-list>
         </div>
     </div>

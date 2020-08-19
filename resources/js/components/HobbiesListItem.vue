@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="container">
-            <div class="row">
+            <div class="row item">
                 <div class="col-auto">
                     <img :src="$store.getters.getProfileLink(hobby.author)" class="rounded-circle" width="30" height="30" />
                 </div>
@@ -12,13 +12,14 @@
                         </a>
                     </h6>
 
-                    <a :href="`/categories/${category.id}`">
-                        {{ category.icon }}
-                        {{ category.name }}
-                    </a>
-
+                    <div class="row">
+                        <a :href="`/categories/${category.id}`">
+                            {{ category.icon }}
+                            {{ category.name }}
+                        </a>
+                        <p class="date">{{ hobby.date }}</p>
+                    </div>
                     <h3>{{ hobby.title }}</h3>
-                    <p>{{ hobby.date }}</p>
                     <p>{{ hobby.description }}</p>
 
                     <a :href="`/hobby/${hobby.id}`">
@@ -45,3 +46,13 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+    .date {
+        margin-left: 20px;
+    }
+
+    .row.item:hover {
+        background-color:#f9f9f9;
+    }
+</style>
