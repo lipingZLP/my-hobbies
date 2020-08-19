@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\GetAllCategories;
 use App\Models\GetHobbiesByCategory;
 use Illuminate\Support\Facades\DB;
+use App\Models\Pagination;
 
 class CategoryRepository extends Repository
 {
@@ -15,8 +16,12 @@ class CategoryRepository extends Repository
         return new GetAllCategories($data);
     }
 
-    public function getHobbiesByCategory($id)
+    public function getHobbiesByCategory($id, $curPage)
     {
+        $totalPages = $this->getCount('SELECT CEILING(COUNT(id) / ' . Constants::HOBBIES_PER_PAGE . ') as count
+            FROM posts
+            WHERE category_id = ?', [$id]);
+
         $categoryInfoSql = 'SELECT id, name, icon FROM categories WHERE id = ?';
         $categoryInfoData = DB::selectOne($categoryInfoSql, [$id]);
 
@@ -26,14 +31,18 @@ class CategoryRepository extends Repository
             FROM posts p
             INNER JOIN users u ON p.user_id = u.id
             WHERE p.category_id IN (SELECT id FROM categories WHERE id = ?)
-            ORDER BY p.date DESC LIMIT 30';
+            ORDER BY p.date DESC
+            LIMIT ' . Constants::HOBBIES_PER_PAGE . '
+            OFFSET ' . ($curPage - 1) * Constants::HOBBIES_PER_PAGE;
 
         $hobbiesInfoData = DB::select($hobbiesInfoSql, [$id]);
+
+        $pagination = new Pagination($curPage, $totalPages);
 
         if (!isset($categoryInfoData) || !isset($hobbiesInfoData)) {
             return null;
         }
 
-        return new GetHobbiesByCategory($categoryInfoData, $hobbiesInfoData);
+        return new GetHobbiesByCategory($categoryInfoData, $hobbiesInfoData, $pagination);
     }
 }

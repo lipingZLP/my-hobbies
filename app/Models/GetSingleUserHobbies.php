@@ -6,13 +6,15 @@ class GetSingleUserHobbies
 {
     public $user;
     public $hobbies = [];
+    public $pagination;
 
-    function __construct($userInfoDbData, $hobbiesInfoDbData)
+    function __construct($userInfoDbData, $hobbiesInfoDbData, $paginationData)
     {
         $this->user = new GetSingleUserHobbiesUser($userInfoDbData);
         foreach ($hobbiesInfoDbData as $dbData) {
             array_push($this->hobbies, new GetSingleUserHobbiesHobby($userInfoDbData, $dbData));
         }
+        $this->pagination = $paginationData;
     }
 }
 

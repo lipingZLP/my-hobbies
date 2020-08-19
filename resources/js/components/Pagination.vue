@@ -66,6 +66,7 @@ export default {
             }
 
             this.$emit('changePage', newPage)
+            window.scrollTo(0, 0)
         },
 
         getCssLiClass(page) {

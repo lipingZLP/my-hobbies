@@ -19,6 +19,8 @@
 
         <div v-if="latest">
             <hobbies-list :hobbies="latest.hobbies"></hobbies-list>
+            <br>
+            <pagination v-if="latest.hobbies.length > 0" :currentPage="pagination.curPage" :totalPages="pagination.totalPages" @changePage="loadPage"></pagination>
         </div>
     </div>
 </template>
@@ -31,24 +33,34 @@ export default {
         return {
             loading: true,
             error: null,
-            latest: null
+            latest: null,
+            pagination: null
         }
     },
 
     mounted() {
-        axios.get('/api/hobbies/latest')
-            .then(res => {
-                this.loading = false;
-                this.latest = res.data;
-            })
-            .catch(err => {
-                this.loading = false;
-                if (err.response.data.error) {
-                    this.error = err.response.data.error.message
-                } else {
-                    this.error = err.message;
-                }
-            })
+        this.loadPage(1)
+    },
+
+    methods: {
+        loadPage(page) {
+            this.loading = true
+
+            axios.get(`/api/hobbies/latest?page=${page}`)
+                .then(res => {
+                    this.loading = false
+                    this.latest = res.data
+                    this.pagination = res.data.pagination
+                })
+                .catch(err => {
+                    this.loading = false
+                    if (err.response.data.error) {
+                        this.error = err.response.data.error.message
+                    } else {
+                        this.error = err.message
+                    }
+                })
+            },
     }
 }
 </script>

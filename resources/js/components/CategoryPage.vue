@@ -16,6 +16,8 @@
             <post-new-hobby :categoryId="$props.id"></post-new-hobby>
             <br>
             <hobbies-list :hobbies="categoriesData.hobbies"></hobbies-list>
+            <br>
+            <pagination v-if="categoriesData.hobbies.length > 0" :currentPage="pagination.curPage" :totalPages="pagination.totalPages" @changePage="loadPage"></pagination>
         </div>
     </div>
 </template>
@@ -28,24 +30,32 @@ export default {
         return {
             loading: true,
             error: null,
-            categoriesData: null
+            categoriesData: null,
+            pagination: null
         }
     },
-
     mounted() {
-        axios.get(`/api/categories/${this.id}/hobbies`)
-            .then(res => {
-                this.loading = false;
-                this.categoriesData = res.data;
-            })
-            .catch(err => {
-                this.loading = false;
-                if (err.response.data.error) {
-                    this.error = err.response.data.error.message
-                } else {
-                    this.error = err.message;
-                }
-            })
+        this.loadPage(1)
+    },
+    methods: {
+        loadPage(page) {
+            this.loading = true
+
+            axios.get(`/api/categories/${this.id}/hobbies?page=${page}`)
+                .then(res => {
+                    this.loading = false
+                    this.categoriesData = res.data
+                    this.pagination = res.data.pagination
+                })
+                .catch(err => {
+                    this.loading = false
+                    if (err.response.data.error) {
+                        this.error = err.response.data.error.message
+                    } else {
+                        this.error = err.message
+                    }
+                })
+            },
     }
 }
 </script>

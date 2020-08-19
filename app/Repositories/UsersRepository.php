@@ -24,8 +24,13 @@ class UsersRepository extends Repository
         return new User($userData);
     }
 
-    public function getInfoByUsername($username)
+    public function getInfoByUsername($username, $curPage)
     {
+        $totalPages = $this->getCount('SELECT CEILING(COUNT(p.id) / ' . Constants::HOBBIES_PER_PAGE . ') as count
+            FROM posts p
+            INNER JOIN users u ON u.id = p.user_id
+            WHERE u.nickname = ?', [$username]);
+
         $userInfoSql = 'SELECT id, name, nickname, avatar,
             (SELECT COUNT(id) FROM followers WHERE user_id = u.id) as followers,
             (SELECT COUNT(id) FROM followers WHERE follower_id = u.id) as following
@@ -39,10 +44,14 @@ class UsersRepository extends Repository
         $hobbiesInfoSql = 'SELECT p.*,
             (SELECT COUNT(c.id) FROM comments c WHERE c.post_id = p.id) as commentsNb
             FROM posts p
-            WHERE p.user_id = ? ORDER BY date DESC LIMIT 30';
-        $hobbiesInfoData = DB::select($hobbiesInfoSql, [$userInfoData->id]);
+            WHERE p.user_id = ? ORDER BY date DESC
+            LIMIT ' . Constants::HOBBIES_PER_PAGE . '
+            OFFSET ' . ($curPage - 1) * Constants::HOBBIES_PER_PAGE;
 
-        return new GetSingleUserHobbies($userInfoData, $hobbiesInfoData);
+        $hobbiesInfoData = DB::select($hobbiesInfoSql, [$userInfoData->id]);
+        $pagination = new Pagination($curPage, $totalPages);
+
+        return new GetSingleUserHobbies($userInfoData, $hobbiesInfoData, $pagination);
     }
 
     public function addFollower($userId, $followerId)

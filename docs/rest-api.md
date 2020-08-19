@@ -42,7 +42,8 @@ Add a hobby
 
 ## GET `/users/{username}`
 
-Return user's info + his/her latest hobbies
+Return user's info + his/her latest hobbies.  
+Add `?page=2` to list hobbies from the second page.
 
 ```json
 {
@@ -71,7 +72,11 @@ Return user's info + his/her latest hobbies
             "rating": 8,
             "commentsNb": 3
         }
-    ]
+    ],
+    "pagination": {
+        "curPage": 1,
+        "totalPages": 30
+    }
 }
 ```
 
@@ -164,7 +169,8 @@ Get all the people a given user follows
 
 ## GET `/hobbies/latest`
 
-Return the latest 30th posts from people you follow
+Return the latest 30th posts from people you follow.  
+Add `?page=2` to list hobbies from the second page.
 
 ```json
 {
@@ -185,7 +191,11 @@ Return the latest 30th posts from people you follow
             "rating": 8,
             "commentsNb": 3
         }
-    ]
+    ],
+    "pagination": {
+        "curPage": 1,
+        "totalPages": 30
+    }
 }
 ```
 
@@ -233,7 +243,8 @@ Add a comment on a hobby
 
 ## GET `/categories/{id}/hobbies`
 
-Return the latest 30th posts of a given category
+Return the latest 30th posts of a given category.  
+Add `?page=2` to list hobbies from the second page.
 
 ```json
 {
@@ -259,7 +270,11 @@ Return the latest 30th posts of a given category
             "rating": 8,
             "commentsNb": 3
         }
-    ]
+    ],
+    "pagination": {
+        "curPage": 1,
+        "totalPages": 30
+    }
 ```
 
 

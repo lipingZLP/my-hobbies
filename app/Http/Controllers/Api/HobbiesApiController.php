@@ -46,11 +46,11 @@ class HobbiesApiController extends Controller
         return response('{}', 201, ['Content-Type' => 'application/json']);
     }
 
-    public function showHobbies()
+    public function showHobbies(Request $request)
     {
         $user_id = Auth::id();
-
-        $data = $this->repository->showFollowingHobbies($user_id);
+        $page = $this->getPage($request);
+        $data = $this->repository->showFollowingHobbies($user_id, $page);
         return response()->json($data);
     }
 

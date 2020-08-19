@@ -6,14 +6,17 @@ class GetHobbiesByCategory
 {
     public $category;
     public $hobbies = [];
+    public $pagination;
 
-    function __construct($categoryInfoData, $hobbiesInfoData)
+    function __construct($categoryInfoData, $hobbiesInfoData, $paginationData)
     {
         $this->category = new Category($categoryInfoData);
 
         foreach ($hobbiesInfoData as $dbData) {
             array_push($this->hobbies, new GetHobbies($dbData));
         }
+
+        $this->pagination = $paginationData;
     }
 }
 

@@ -5,12 +5,15 @@ namespace App\Models;
 class ShowHobbies
 {
     public $hobbies = [];
+    public $pagination;
 
-    function __construct($dbData)
+    function __construct($dbData, $paginationData)
     {
         foreach($dbData as $entry) {
             array_push($this->hobbies, new Hobby($entry));
         }
+
+        $this->pagination = $paginationData;
     }
 }
 

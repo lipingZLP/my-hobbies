@@ -15,19 +15,27 @@ class HobbiesRepository extends Repository
         DB::insert($sql, [$categoryId, $title, $description, $rating, $user_id]);
     }
 
-    public function showFollowingHobbies($id)
+    public function showFollowingHobbies($id, $curPage)
     {
+        $totalPages = $this->getCount('SELECT CEILING(COUNT(p.id) / ' . Constants::HOBBIES_PER_PAGE . ') as count
+            FROM posts p
+            INNER JOIN users u ON p.user_id = u.id
+            WHERE p.user_id IN (SELECT user_id FROM followers WHERE follower_id = ?)', [$id]);
+
         $sql = 'SELECT p.id as pid, p.title, p.description, p.rating, p.date, p.category_id,
             (SELECT COUNT(c.id) FROM comments c WHERE c.post_id = p.id) as commentsNb,
             u.id, u.name, u.nickname, u.avatar
             FROM posts p
             INNER JOIN users u ON p.user_id = u.id
             WHERE p.user_id IN (SELECT user_id FROM followers WHERE follower_id = ?)
-            ORDER BY date DESC LIMIT 30';
+            ORDER BY date DESC
+            LIMIT ' . Constants::HOBBIES_PER_PAGE . '
+            OFFSET ' . ($curPage - 1) * Constants::HOBBIES_PER_PAGE;
 
         $ShowHobbiesData = DB::select($sql, [$id]);
+        $pagination = new Pagination($curPage, $totalPages);
 
-        return new ShowHobbies($ShowHobbiesData);
+        return new ShowHobbies($ShowHobbiesData, $pagination);
     }
 
     public function getCommentsById($id, $curPage)
