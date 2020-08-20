@@ -1,3 +1,6 @@
+# Avatars uploaded by users
+public/images/avatars
+
 # Node
 node_modules/
 npm-debug.log

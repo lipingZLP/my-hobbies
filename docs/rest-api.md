@@ -318,7 +318,7 @@ Update a user with given values
     "name": "Liping",
     "nickname": "Lime",
     "email": "zzz@zzz.fr",
-    "avatar": "photo.jpg",
+    "avatar": "binary_base64_image_data",
     "is_admin": true
 }
 ```

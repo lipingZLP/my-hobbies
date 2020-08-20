@@ -23,7 +23,7 @@
                     <p>{{ hobby.description }}</p>
 
                     <a :href="`/hobby/${hobby.id}`">
-                        <b>{{ hobby.commentsNb }}</b> comments
+                        <b>{{ hobby.commentsNb }}</b> comments&nbsp;💬
                     </a>
                 </div>
                 <div class="col-auto">

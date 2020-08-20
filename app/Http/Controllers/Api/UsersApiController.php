@@ -134,11 +134,26 @@ class UsersApiController extends Controller
         if ($password != null && strlen($password) < 8) {
             return $this->error('The password must be at least 8 characters.');
         }
-        $avatar = $request->input('avatar');
+
+        $base64Avatar = $request->input('avatar');
+        $exploded = explode(',', $base64Avatar);
+        $binaryAvatar = base64_decode($exploded[1]);
+
+        if (str_contains($exploded[0], 'jpeg')) {
+            $extension = 'jpg';
+        } else if (str_contains($exploded[0], 'png')) {
+            $extension = 'png';
+        } else {
+            return $this->error('Avatar file must be a jpg or a png.');
+        }
+
+        $avatarFileName = uniqid() . '.' . $extension;
+        $avatarFullPath = public_path() . '/images/avatars/' . $avatarFileName;
+        file_put_contents($avatarFullPath, $binaryAvatar);
 
         $isAdmin = $request->input('is_admin');
 
-        if (!$this->repository->update($name, $username, $email, $password, $avatar, $isAdmin, $id)) {
+        if (!$this->repository->update($name, $username, $email, $password, $avatarFileName, $isAdmin, $id)) {
             return $this->error('Invalid query');
         };
 

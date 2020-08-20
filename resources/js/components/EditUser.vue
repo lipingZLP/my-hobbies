@@ -35,9 +35,10 @@
                                     v-model="userData.password" placeholder="Leave empty to keep current password">
                             <br>
                             <label for="avatar">Avatar: </label>
-                            <input type="text" id="avatar" class="form-control"
-                                   v-model="userData.avatar">
-
+                            <br>
+                            <input type="file" id="avatar" class="custom-input"
+                                   @change="imageChanged" accept="image/png, image/jpeg">
+                            <br>
                             <div v-if="$props.admin">
                                 <br>
                                 <label for="is_admin">Is admin: </label>
@@ -78,6 +79,16 @@ export default {
     },
 
     methods: {
+        imageChanged(e) {
+            let selectedImage = e.target.files[0]
+
+            let reader = new FileReader()
+            reader.readAsDataURL(selectedImage)
+            reader.onload = (e) => {
+                this.userData.avatar = e.target.result
+            }
+        },
+
         submitted() {
             let url;
             if (this.$props.admin) {
