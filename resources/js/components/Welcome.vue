@@ -19,7 +19,7 @@
 <style scoped>
     .welcome-div {
         color: #2b7cce;
-        font-family: "Londrina Outline";
+        font-family: "Strait";
         font-size: 6em;
     }
 </style>

@@ -9,7 +9,7 @@
         </div>
 
         <div v-show="latest.hobbies.length > 0">
-            <div class="row justify-content-center">
+            <div class="row justify-content-center strait">
                 <h2>🏠 {{ username}}'s Home</h2>
             </div>
 

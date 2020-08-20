@@ -10,7 +10,7 @@
 
         <div v-if="categoriesData">
             <div class="row justify-content-center">
-                <h2>{{ categoriesData.category.icon }} {{ categoriesData.category.name }}</h2>
+                <h2 class="strait">{{ categoriesData.category.icon }} {{ categoriesData.category.name }}</h2>
             </div>
 
             <post-new-hobby :categoryId="$props.id"></post-new-hobby>

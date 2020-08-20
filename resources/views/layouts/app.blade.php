@@ -33,8 +33,8 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
             <div class="container">
-                <a class="navbar-brand" href="{{ route('home') }}">
-                    <img src="/images/logo.png" height="28" alt="Logo">
+                <a class="navbar-brand strait" href="{{ route('home') }}">
+                    <img src="/images/logo.png" height="28" alt="Logo">&nbsp;
                     {{ config('app.name', 'My Hobbies') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">

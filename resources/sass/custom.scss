@@ -3,6 +3,8 @@
 }
 
 .navbar-dark .navbar-nav .nav-link {
+    font-family: "Strait";
+    font-size: 1em;
     color: rgba(255, 255, 255, 0.89);
 }
 
@@ -35,8 +37,11 @@
     object-fit: cover;
 }
 
+.strait {
+    font-family: "Strait";
+}
+
 label {
     color: #444;
-    font-family: "Roboto Condensed";
-    font-weight: normal;
+    font-family: "Strait";
 }
