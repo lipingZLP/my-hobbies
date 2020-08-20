@@ -39,7 +39,7 @@
 
                             <div class="row align-items-end">
                                 &nbsp;&nbsp;
-                                <img :src="oldAvatar" class="rounded-circle" width="80" height="80" />
+                                <img :src="oldAvatar" class="rounded-circle image-keep-ratio" width="80" height="80" />
                                 &nbsp;&nbsp;
 
                                 <input type="file" id="avatar" class="custom-input"

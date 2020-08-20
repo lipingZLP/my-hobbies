@@ -7,7 +7,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-auto">
-                                    <img :src="$store.getters.getProfileLink(user)" class="rounded-circle" width="80" height="80" />
+                                    <img :src="$store.getters.getProfileLink(user)" class="rounded-circle image-keep-ratio" width="120" height="120" />
                                 </div>
 
                                 <div class="col">

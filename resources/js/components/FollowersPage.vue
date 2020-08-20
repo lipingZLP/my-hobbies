@@ -20,7 +20,7 @@
 
                     <div v-for="(follower, i) in followersList" :key="i">
                         <div class="row">
-                            <img :src="$store.getters.getProfileLink(follower)" class="rounded-circle" width="30" height="30" />
+                            <img :src="$store.getters.getProfileLink(follower)" class="rounded-circle image-keep-ratio" width="30" height="30" />
                             <h6>
                                 <a :href="`/users/${follower.nickname}`">
                                     {{follower.name}} @{{follower.nickname}}

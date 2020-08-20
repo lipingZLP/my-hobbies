@@ -31,6 +31,10 @@
     margin: 24px;
 }
 
+.image-keep-ratio {
+    object-fit: cover;
+}
+
 label {
     color: #444;
     font-family: "Roboto Condensed";

@@ -3,7 +3,7 @@
         <div class="container">
             <div class="row item">
                 <div class="col-auto">
-                    <img :src="$store.getters.getProfileLink(comment.author)" class="rounded-circle" width="30" height="30" />
+                    <img :src="$store.getters.getProfileLink(comment.author)" class="rounded-circle image-keep-ratio" width="30" height="30" />
                 </div>
                 <div class="col">
                     <h6>

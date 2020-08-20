@@ -28,7 +28,7 @@
                         <td>{{item.name}}</td>
                         <td>{{item.nickname}}</td>
                         <td>{{item.email}}</td>
-                        <td><img :src="$store.getters.getProfileLink(item)" class="rounded-circle" width="30" height="30" /></td>
+                        <td><img :src="$store.getters.getProfileLink(item)" class="rounded-circle image-keep-ratio" width="30" height="30" /></td>
                         <td>{{item.is_admin}}</td>
                         <td><a :href="`/admin/users/${item.id}/edit`">Edit</a></td>
                         <td><button><a href="#" @click.prevent="deleteUser(item.id)">Delete</a></button></td>
