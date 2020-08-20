@@ -73,3 +73,14 @@ To have access to the admin page, you must:
 ```sql
 UPDATE `users` SET is_admin = TRUE WHERE id = ?;
 ```
+
+
+### Create upload directories
+
+The website stores uploaded avatars and hobbies photos.  
+Make sure you have create the following directories:
+
+```sh
+mkdir public/images/avatars
+mkdir public/images/posts
+```
