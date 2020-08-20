@@ -136,8 +136,8 @@ class UsersRepository extends Repository
 
     public function update($name, $nickname, $email, $password, $avatar, $isAdmin, $id)
     {
-        $sql = 'UPDATE users SET name = ?, nickname = ?, email = ?, avatar = ?';
-        $sqlArgs = [$name, $nickname, $email, $avatar];
+        $sql = 'UPDATE users SET name = ?, nickname = ?, email = ?';
+        $sqlArgs = [$name, $nickname, $email];
 
         // If we modify user from admin page
         if ($isAdmin != null) {
@@ -150,6 +150,13 @@ class UsersRepository extends Repository
             $password = Hash::make($password);
             $sql .= ', password = ?';
             array_push($sqlArgs, $password);
+        }
+
+        // If user wants to update his/her avatar
+        if ($avatar != null) {
+            $this->deleteAvatar($id);
+            $sql .= ', avatar = ?';
+            array_push($sqlArgs, $avatar);
         }
 
         // Finish SQL query
