@@ -8,7 +8,7 @@
             {{ error }}
         </div>
 
-        <div>
+        <div v-show="latest.hobbies.length > 0">
             <div class="row justify-content-center">
                 <h2>🏠 {{ username}}'s Home</h2>
             </div>
@@ -17,7 +17,10 @@
             <br>
         </div>
 
-        <div v-if="latest">
+        <!-- Welcome component shown only when there's no data (first usage) -->
+        <welcome v-if="latest.hobbies.length == 0"></welcome>
+
+        <div v-if="latest.hobbies.length > 0">
             <hobbies-list :hobbies="latest.hobbies"></hobbies-list>
             <br>
             <pagination v-if="latest.hobbies.length > 0" :currentPage="pagination.curPage" :totalPages="pagination.totalPages" @changePage="loadPage"></pagination>
