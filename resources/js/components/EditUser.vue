@@ -36,8 +36,17 @@
                             <br>
                             <label for="avatar">Avatar: </label>
                             <br>
-                            <input type="file" id="avatar" class="custom-input"
-                                   @change="imageChanged" accept="image/png, image/jpeg">
+
+                            <div class="row align-items-end">
+                                &nbsp;&nbsp;
+                                <img :src="oldAvatar" class="rounded-circle" width="80" height="80" />
+                                &nbsp;&nbsp;
+
+                                <input type="file" id="avatar" class="custom-input"
+                                    @change="imageChanged" accept="image/png, image/jpeg">
+                            </div>
+
+
                             <br>
                             <div v-if="$props.admin">
                                 <br>
@@ -55,7 +64,7 @@
                                 </div>
                             </div>
                             <br>
-                            <button class="btn btn-primary" @click.prevent="submitted">Submit!
+                            <button class="btn btn-primary" @click.prevent="submitted">Update
                             </button>
                         </div>
                     </div>
@@ -74,7 +83,8 @@ export default {
             loading: true,
             error: null,
             formError: null,
-            userData: null
+            userData: null,
+            oldAvatar: null
         }
     },
 
@@ -135,6 +145,7 @@ export default {
             .then(res => {
                 this.loading = false
                 this.userData = res.data
+                this.oldAvatar = this.$store.getters.getProfileLink(this.userData)
             })
             .catch(err => {
                 this.loading = false
