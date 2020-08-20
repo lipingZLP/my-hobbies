@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use App\Repositories\UsersRepository;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -31,14 +32,17 @@ class RegisterController extends Controller
      */
     protected $redirectTo = RouteServiceProvider::HOME;
 
+    protected $usersRepository;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(UsersRepository $usersRepository)
     {
         $this->middleware('guest');
+        $this->usersRepository = $usersRepository;
     }
 
     /**
@@ -65,11 +69,16 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'nickname' => $data['nickname'],
         ]);
+
+        // Auto-follow so user can see his/her own posts by default
+        $this->usersRepository->addFollower($user->id, $user->id);
+
+        return $user;
     }
 }
