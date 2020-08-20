@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\GetSingleUserHobbies;
 use App\Models\Pagination;
 use App\Models\User;
+use ErrorException;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Hash;
 
@@ -165,6 +166,8 @@ class UsersRepository extends Repository
 
     public function delete($id)
     {
+        $this->deleteAvatar($id);
+
         $sql = 'DELETE FROM users WHERE id = ? LIMIT 1';
         try {
             $affectedRows = DB::delete($sql, [$id]);
@@ -174,6 +177,21 @@ class UsersRepository extends Repository
             return true;
         } catch (QueryException $e) {
             return false;
+        }
+    }
+
+    private function deleteAvatar($id)
+    {
+        $user = $this->getById($id);
+        $avatar = $user->avatar;
+
+        if (isset($avatar)) {
+            $fileName = public_path() . '/images/avatars/' . $avatar;
+            try {
+                unlink($fileName);
+            } catch (ErrorException $e) {
+                // Do nothing: file does not exist on the filesystem.
+            }
         }
     }
 }
