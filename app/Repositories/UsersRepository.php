@@ -25,7 +25,7 @@ class UsersRepository extends Repository
         return new User($userData);
     }
 
-    public function getInfoByUsername($username, $curPage)
+    public function getInfoByUsername($username, $curPage, $curUserId)
     {
         $totalPages = $this->getCount('SELECT CEILING(COUNT(p.id) / ' . Constants::HOBBIES_PER_PAGE . ') as count
             FROM posts p
@@ -34,10 +34,11 @@ class UsersRepository extends Repository
 
         $userInfoSql = 'SELECT id, name, nickname, avatar,
             (SELECT COUNT(id) FROM followers WHERE user_id = u.id) as followers,
-            (SELECT COUNT(id) FROM followers WHERE follower_id = u.id) as following
+            (SELECT COUNT(id) FROM followers WHERE follower_id = u.id) as following,
+            (SELECT COUNT(id) FROM followers WHERE follower_id = ? AND user_id = u.id) as followed
             FROM users u WHERE nickname = ?';
 
-        $userInfoData = DB::selectOne($userInfoSql, [$username]);
+        $userInfoData = DB::selectOne($userInfoSql, [$curUserId, $username]);
         if (!isset($userInfoData)) {
             return null;
         }

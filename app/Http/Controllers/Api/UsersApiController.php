@@ -28,8 +28,9 @@ class UsersApiController extends Controller
 
     public function getInfoByUsername(Request $request, $username)
     {
+        $userId = Auth::id();
         $page = $this->getPage($request);
-        $data = $this->repository->getInfoByUsername($username, $page);
+        $data = $this->repository->getInfoByUsername($username, $page, $userId);
 
         if (!isset($data)) {
             return response()->json(new Error('Resource not found'), 404);

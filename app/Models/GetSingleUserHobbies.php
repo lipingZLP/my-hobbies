@@ -26,6 +26,7 @@ class GetSingleUserHobbiesUser
     public $avatar;
     public $followers;
     public $following;
+    public $followed;
 
     public function __construct($userInfoDbData)
     {
@@ -35,6 +36,7 @@ class GetSingleUserHobbiesUser
         $this->avatar = $userInfoDbData->avatar;
         $this->followers = $userInfoDbData->followers;
         $this->following = $userInfoDbData->following;
+        $this->followed = $userInfoDbData->followed == 1;
     }
 }
 

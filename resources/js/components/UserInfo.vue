@@ -17,7 +17,10 @@
                                     <h6 v-if="!small"><a :href="`/users/${user.id}/following`"><b>{{user.following}}</b> following</a></h6>
                                     <h6 v-if="!small"><a :href="`/users/${user.id}/followers`"><b>{{user.followers}}</b> followers</a></h6>
 
-                                    <follow-button :id="user.id" v-if="!small"></follow-button>
+                                    <div class="row">
+                                        <follow-button :id="user.id" :isFollowed="user.followed" @followed="updateFollowed" v-if="!small"></follow-button>&nbsp;&nbsp;
+                                        <unfollow-button :id="user.id" :isFollowed="user.followed" @followed="updateFollowed" v-if="!small"></unfollow-button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -30,6 +33,12 @@
 
 <script>
 export default {
-    props: ['user', 'small']
+    props: ['user', 'small'],
+
+    methods: {
+        updateFollowed(followed) {
+            this.$props.user.followed = followed
+        }
+    }
 }
 </script>
