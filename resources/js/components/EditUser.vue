@@ -145,6 +145,7 @@ export default {
                 this.loading = false
                 this.userData = res.data
                 this.oldAvatar = this.$store.getters.getProfileLink(this.userData)
+                this.userData.avatar = null
             })
             .catch(err => {
                 this.loading = false
