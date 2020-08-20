@@ -11,7 +11,7 @@ class UsersList
 
     function __construct($usersData, $paginationData)
     {
-        foreach($usersData as $entry){
+        foreach($usersData as $entry) {
             array_push($this->users, new User($entry));
         }
 

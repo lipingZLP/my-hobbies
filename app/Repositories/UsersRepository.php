@@ -174,6 +174,7 @@ class UsersRepository extends Repository
     public function delete($id)
     {
         $this->deleteAvatar($id);
+        $this->deletePostsPhotos($id);
 
         $sql = 'DELETE FROM users WHERE id = ? LIMIT 1';
         try {
@@ -190,10 +191,23 @@ class UsersRepository extends Repository
     private function deleteAvatar($id)
     {
         $user = $this->getById($id);
-        $avatar = $user->avatar;
+        $this->deleteUploadedPhoto($user->avatar, 'avatars');
+    }
 
-        if (isset($avatar)) {
-            $fileName = public_path() . '/images/avatars/' . $avatar;
+    private function deletePostsPhotos($userId)
+    {
+        $sql = 'SELECT photo FROM posts WHERE user_id = ?';
+        $data = DB::select($sql, [$userId]);
+
+        foreach($data as $item) {
+            $this->deleteUploadedPhoto($item->photo, 'posts');
+        }
+    }
+
+    private function deleteUploadedPhoto($photo, $type)
+    {
+        if (isset($photo)) {
+            $fileName = public_path() . '/images/' . $type . '/' . $photo;
             try {
                 unlink($fileName);
             } catch (ErrorException $e) {
