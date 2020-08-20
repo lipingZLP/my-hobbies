@@ -136,7 +136,7 @@ class UsersApiController extends Controller
         }
 
         $base64Avatar = $request->input('avatar');
-        $avatar = $this->saveBase64AvatarToFileSystem($base64Avatar);
+        $avatar = $this->saveBase64ImageToFileSystem($base64Avatar, 'avatars');
 
         $isAdmin = $request->input('is_admin');
 
@@ -165,28 +165,5 @@ class UsersApiController extends Controller
 
     private function error($message) {
         return response()->json(new Error($message), 400);
-    }
-
-    private function saveBase64AvatarToFileSystem($base64Avatar) {
-        if (!isset($base64Avatar)) {
-            return null;
-        }
-
-        $exploded = explode(',', $base64Avatar);
-        $binaryAvatar = base64_decode($exploded[1]);
-
-        if (str_contains($exploded[0], 'jpeg')) {
-            $extension = 'jpg';
-        } else if (str_contains($exploded[0], 'png')) {
-            $extension = 'png';
-        } else {
-            return $this->error('Avatar file must be a jpg or a png.');
-        }
-
-        $avatarFileName = uniqid() . '.' . $extension;
-        $avatarFullPath = public_path() . '/images/avatars/' . $avatarFileName;
-        file_put_contents($avatarFullPath, $binaryAvatar);
-
-        return $avatarFileName;
     }
 }

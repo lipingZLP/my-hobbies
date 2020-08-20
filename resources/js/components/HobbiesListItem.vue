@@ -22,6 +22,11 @@
                     <h3>{{ hobby.title }}</h3>
                     <p>{{ hobby.description }}</p>
 
+                    <div v-if="hobby.photo">
+                        <img :src="`/images/posts/${hobby.photo}`" width="100%">
+                    </div>
+                    <br>
+
                     <a :href="`/hobby/${hobby.id}`">
                         <b>{{ hobby.commentsNb }}</b> comments&nbsp;💬
                     </a>

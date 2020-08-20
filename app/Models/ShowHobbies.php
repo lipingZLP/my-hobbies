@@ -26,6 +26,7 @@ class Hobby
     public $category_id;
     public $description;
     public $rating;
+    public $photo;
     public $commentsNb;
 
     public function __construct($dbData)
@@ -37,6 +38,7 @@ class Hobby
         $this->category_id = $dbData->category_id;
         $this->description = $dbData->description;
         $this->rating = $dbData->rating;
+        $this->photo = $dbData->photo;
         $this->commentsNb = $dbData->commentsNb;
     }
 }

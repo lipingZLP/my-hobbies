@@ -9,10 +9,10 @@ use App\Models\Pagination;
 
 class HobbiesRepository extends Repository
 {
-    public function add($user_id, $categoryId, $title, $description, $rating)
+    public function add($user_id, $categoryId, $title, $description, $rating, $photo)
     {
-        $sql = 'INSERT INTO posts(category_id, title, description, rating, date, user_id) VALUES (?, ?, ?, ?, now(), ?)';
-        DB::insert($sql, [$categoryId, $title, $description, $rating, $user_id]);
+        $sql = 'INSERT INTO posts(category_id, title, description, rating, photo, date, user_id) VALUES (?, ?, ?, ?, ?, now(), ?)';
+        DB::insert($sql, [$categoryId, $title, $description, $rating, $photo, $user_id]);
     }
 
     public function showFollowingHobbies($id, $curPage)
@@ -22,7 +22,7 @@ class HobbiesRepository extends Repository
             INNER JOIN users u ON p.user_id = u.id
             WHERE p.user_id IN (SELECT user_id FROM followers WHERE follower_id = ?)', [$id]);
 
-        $sql = 'SELECT p.id as pid, p.title, p.description, p.rating, p.date, p.category_id,
+        $sql = 'SELECT p.id as pid, p.title, p.description, p.rating, p.photo, p.date, p.category_id,
             (SELECT COUNT(c.id) FROM comments c WHERE c.post_id = p.id) as commentsNb,
             u.id, u.name, u.nickname, u.avatar
             FROM posts p

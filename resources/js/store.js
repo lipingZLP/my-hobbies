@@ -21,6 +21,7 @@ export default new Vuex.Store({
             }
             return '/images/avatar_placeholder.jpeg'
         },
+
         getCategory: (state) => (id) => {
             return state.categories.find(element => element.id === id);
         }

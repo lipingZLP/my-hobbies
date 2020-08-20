@@ -44,6 +44,11 @@
                         </select>
 
                         <br>
+                        <label for="photo">Optional photo:</label><br>
+                        <input type="file" id="photo" class="custom-input"
+                            @change="imageChanged" accept="image/png, image/jpeg">
+
+                        <br><br>
                         <button class="btn btn-primary" @click.prevent="submitted">Send!</button>
                     </div>
                 </div>
@@ -64,7 +69,8 @@ export default {
                 categoryId: this.$props.categoryId ?? null,
                 title: '',
                 description: '',
-                rating: null
+                rating: null,
+                photo: null
             }
         }
     },
@@ -84,6 +90,16 @@ export default {
                     }
                     window.scrollTo(0, 0)
                 })
+        },
+
+        imageChanged(e) {
+            let selectedImage = e.target.files[0]
+
+            let reader = new FileReader()
+            reader.readAsDataURL(selectedImage)
+            reader.onload = (e) => {
+                this.formData.photo = e.target.result
+            }
         }
     }
 }

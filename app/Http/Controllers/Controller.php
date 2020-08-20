@@ -21,4 +21,27 @@ class Controller extends BaseController
         }
         return $page;
     }
+
+    protected function saveBase64ImageToFileSystem($base64Image, $type) {
+        if (!isset($base64Image)) {
+            return null;
+        }
+
+        $exploded = explode(',', $base64Image);
+        $binaryImage = base64_decode($exploded[1]);
+
+        if (str_contains($exploded[0], 'jpeg')) {
+            $extension = 'jpg';
+        } else if (str_contains($exploded[0], 'png')) {
+            $extension = 'png';
+        } else {
+            return $this->error('Photo must be a jpg or a png.');
+        }
+
+        $imageFileName = uniqid() . '.' . $extension;
+        $imageFullPath = public_path() . '/images/' . $type . '/' . $imageFileName;
+        file_put_contents($imageFullPath, $binaryImage);
+
+        return $imageFileName;
+    }
 }

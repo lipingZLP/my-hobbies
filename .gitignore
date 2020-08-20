@@ -1,5 +1,6 @@
-# Avatars uploaded by users
+# Images uploaded by users
 public/images/avatars
+public/images/posts
 
 # Node
 node_modules/

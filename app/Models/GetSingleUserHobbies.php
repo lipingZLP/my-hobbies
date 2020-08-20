@@ -46,6 +46,7 @@ class GetSingleUserHobbiesHobby
     public $category_id;
     public $description;
     public $rating;
+    public $photo;
     public $author;
     public $commentsNb;
 
@@ -58,6 +59,7 @@ class GetSingleUserHobbiesHobby
         $this->category_id = $hobbyInfoDbData->category_id;
         $this->description = $hobbyInfoDbData->description;
         $this->rating = $hobbyInfoDbData->rating;
+        $this->photo = $hobbyInfoDbData->photo;
         $this->commentsNb = $hobbyInfoDbData->commentsNb;
     }
 }

@@ -46,7 +46,6 @@
                                     @change="imageChanged" accept="image/png, image/jpeg">
                             </div>
 
-
                             <br>
                             <div v-if="$props.admin">
                                 <br>

@@ -29,6 +29,7 @@ class GetHobbies
     public $category_id;
     public $description;
     public $rating;
+    public $photo;
     public $commentsNb;
 
     function __construct($hobbiesInfoData)
@@ -40,6 +41,7 @@ class GetHobbies
         $this->category_id = $hobbiesInfoData->category_id;
         $this->description = $hobbiesInfoData->description;
         $this->rating = $hobbiesInfoData->rating;
+        $this->photo = $hobbiesInfoData->photo;
         $this->commentsNb = $hobbiesInfoData->commentsNb;
     }
 }

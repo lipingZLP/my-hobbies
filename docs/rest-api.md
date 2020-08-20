@@ -29,7 +29,8 @@ Add a hobby
     "categoryId": 2,
     "title": "Book XXX from YYY",
     "description": "Blabla blabla",
-    "rating": 2
+    "rating": 2,
+    "photo": "binary_base64_image_data"
 }
 ```
 

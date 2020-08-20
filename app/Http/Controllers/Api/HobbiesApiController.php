@@ -41,7 +41,10 @@ class HobbiesApiController extends Controller
             return $this->error('You must specify a rating.');
         }
 
-        $this->repository->add($user_id, $categoryId, $title, $description, $rating);
+        $base64Photo = $request->input('photo');
+        $photo = $this->saveBase64ImageToFileSystem($base64Photo, 'posts');
+
+        $this->repository->add($user_id, $categoryId, $title, $description, $rating, $photo);
 
         return response('{}', 201, ['Content-Type' => 'application/json']);
     }
